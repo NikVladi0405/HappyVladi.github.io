@@ -284,10 +284,41 @@
         }
     });
 
-    // ----- 8. Интерактив -----
-    document.getElementById('childhoodPhoto').addEventListener('click', function() {
-        showToast('🌼 Эта маленькая девочка выросла в прекрасную королеву!');
+    // ----- 8. Переключение фото детство/взрослая -----
+    const childhoodPhoto = document.getElementById('childhoodPhoto');
+    const img = childhoodPhoto.querySelector('img');
+    let isAdult = false;
+
+    // Убедимся, что data-adult задан (если нет, установим значение по умолчанию)
+    if (!img.dataset.adult) {
+        img.dataset.adult = 'img/vlada.jpg';
+    }
+
+    childhoodPhoto.addEventListener('click', function(e) {
+        const currentSrc = img.src;
+        const adultSrc = img.dataset.adult;
+        if (!isAdult) {
+            // Переключаем на взрослое
+            img.classList.add('switching');
+            setTimeout(() => {
+                img.src = adultSrc;
+                img.classList.remove('switching');
+            }, 300);
+            isAdult = true;
+            showToast('🌹 А вот и взрослая Влада! Какая красивая!');
+        } else {
+            // Возвращаем детство
+            img.classList.add('switching');
+            setTimeout(() => {
+                img.src = 'img/childhood.jpg';
+                img.classList.remove('switching');
+            }, 300);
+            isAdult = false;
+            showToast('🌸 И снова маленькая принцесса!');
+        }
     });
+
+    // ----- 9. Интерактив для карточек воспоминаний -----
     document.querySelectorAll('.memory-card').forEach(card => {
         card.addEventListener('click', function() {
             const person = this.dataset.person || 'близкий человек';
@@ -295,7 +326,7 @@
         });
     });
 
-    // ----- 9. Тосты -----
+    // ----- 10. Тосты -----
     function showToast(text) {
         let toast = document.querySelector('.toast');
         if (!toast) {
