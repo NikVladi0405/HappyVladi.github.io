@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>С Днём Рождения, любимая!</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Dancing+Script:wght@400;500;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Tangerine:wght@400;700&display=swap" rel="stylesheet" />
@@ -104,7 +104,6 @@
         </div>
     </section>
 
-    <!-- Магическая музыка для свитка -->
     <audio id="magicAudio" preload="auto" loop>
         <source src="audio/magicbook.mp3" type="audio/mpeg" />
     </audio>
@@ -122,9 +121,7 @@
         </div>
     </section>
 
-    <!-- ============================================================
-    СЕКЦИЯ 5: СЮРПРИЗ ОТ БЛИЗКИХ (ПЕРЕРАБОТАННЫЙ БЛОК)
-    ============================================================ -->
+    <!-- ===== СЕКЦИЯ 5: СЮРПРИЗ ОТ БЛИЗКИХ ===== -->
     <section id="surprise">
         <div class="container">
             <h2>🎁 Сюрприз от близких</h2>
@@ -138,38 +135,16 @@
                 </button>
             </div>
 
-            <!-- Слайдер с улучшенным дизайном -->
             <div class="slider-wrapper" id="sliderWrapper">
-                <div class="slider-track" id="sliderTrack">
-                    <!-- Слайды генерируются JS -->
-                </div>
-
-                <!-- Декоративные линии -->
+                <div class="slider-track" id="sliderTrack"></div>
                 <div class="slider-lines">
                     <span class="line left"></span>
                     <span class="line right"></span>
                 </div>
-
-                <!-- Индикаторы -->
                 <div class="slider-dots" id="sliderDots"></div>
-
-                <!-- Управление -->
                 <div class="slider-controls">
                     <span class="slide-counter" id="slideCounter">1 / 8</span>
-                    <div class="slider-nav" id="sliderNav">
-                        <button class="nav-btn" id="prevSlide" disabled>
-                            <span class="nav-icon">◀</span>
-                            <span class="nav-label">Назад</span>
-                        </button>
-                        <button class="nav-btn" id="nextSlide">
-                            <span class="nav-label">Вперёд</span>
-                            <span class="nav-icon">▶</span>
-                        </button>
-                        <button class="nav-btn skip-btn" id="skipBtn">
-                            <span class="nav-icon">⏭</span>
-                            <span class="nav-label">Пропустить</span>
-                        </button>
-                    </div>
+                    <div class="swipe-hint" id="swipeHint">👆 Свайпай влево/вправо или листай колесиком</div>
                 </div>
             </div>
         </div>
