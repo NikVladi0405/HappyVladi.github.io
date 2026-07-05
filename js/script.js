@@ -31,19 +31,19 @@
         ballsContainer.appendChild(ball);
     }
 
-    // ----- 2. Данные друзей (ваши изменения) -----
+    // ----- 2. Данные друзей -----
     const friends = [
         { name: 'Мама', message: 'С днём рождения, Дочка! Ты — лучшая!', photo: 'img/friends/mama.jpg', video: 'video/friend1.mp4' },
         { name: 'Никита', message: 'Пусть мечты сбываются! Я тебя люблю!', photo: 'img/nikita.jpg', video: 'video/friend2.mp4', audio: 'audio/Nikita.ogg' },
-        { name: 'Малика', message: 'Пусть будет только счастье! ❤️', photo: 'img/friends/angelina.jpg', video: 'video/friend5.mp4', audio: 'audio/friend5.mp3' },
+        { name: 'Малика', message: 'Пусть будет только счастье! ❤️', photo: 'img/friends/angelina.jpg', video: 'video/friend5.mp4', audio: 'audio/friend5.ogg' },
         { name: 'Амалия', message: 'Ты — невероятная! Обнимаю)', photo: 'img/friends/malika.jpg', video: 'video/friend3.mp4' },
-        { name: 'Эрика', message: 'Ты наше чудо!', photo: 'img/friends/erika.jpg', video: 'video/friend7.mp4', audio: 'audio/friend7.mp3' },
-        { name: 'Ирина', message: 'Пусть жизнь будет сладкой, как мёд!', photo: 'img/friends/irina.jpg', video: 'video/friend4.mp4', audio: 'audio/friend4.mp3' },
-        { name: 'Кира', message: 'Будь счастлива каждый миг!', photo: 'img/friends/kira.jpg', video: 'video/friend6.mp4', audio: 'audio/friend6.mp3' },
-        { name: 'Катя', message: 'Поздравляю от всей души!', photo: 'img/friends/katya.jpg', video: 'video/friend8.mp4', audio: 'audio/friend8.mp3' }
+        { name: 'Эрика', message: 'Ты наше чудо!', photo: 'img/friends/erika.jpg', video: 'video/friend7.mp4', audio: 'audio/friend7.ogg' },
+        { name: 'Ирина', message: 'Пусть жизнь будет сладкой, как мёд!', photo: 'img/friends/irina.jpg', video: 'video/friend4.mp4', audio: 'audio/friend4.ogg' },
+        { name: 'Кира', message: 'Будь счастлива каждый миг!', photo: 'img/friends/kira.jpg', video: 'video/friend6.mp4', audio: 'audio/friend6.ogg' },
+        { name: 'Катя', message: 'Поздравляю от всей души!', photo: 'img/friends/katya.jpg', video: 'video/friend8.mp4', audio: 'audio/friend8.ogg' }
     ];
 
-    // ----- 3. DOM-элементы для слайдера -----
+    // ----- 3. Слайдер -----
     const playBtn = document.getElementById('playSurprise');
     const sliderTrack = document.getElementById('sliderTrack');
     const sliderDots = document.getElementById('sliderDots');
@@ -60,7 +60,6 @@
     let currentVideo = null;
     let currentAudio = null;
 
-    // ----- 4. Создание слайдов -----
     friends.forEach((f, index) => {
         const slide = document.createElement('div');
         slide.className = 'slide';
@@ -84,6 +83,7 @@
         };
         img.addEventListener('click', function(e) {
             showToast(`💖 ${f.name} — ты в моём сердце!`);
+            launchFirework(e.clientX, e.clientY);
         });
         card.appendChild(img);
 
@@ -92,6 +92,7 @@
         name.textContent = f.name;
         name.addEventListener('click', function() {
             showToast(`✨ ${f.name} желает тебе счастья!`);
+            launchFirework();
         });
         card.appendChild(name);
 
@@ -105,6 +106,7 @@
         msg.textContent = f.message;
         msg.addEventListener('click', function() {
             showToast(`📝 "${f.message}"`);
+            launchFirework();
         });
         card.appendChild(msg);
 
@@ -144,7 +146,6 @@
         sliderDots.appendChild(dot);
     });
 
-    // ----- 5. Функции слайдера -----
     function goToSlide(index, animate = true) {
         if (index < 0 || index >= totalSlides) return;
         currentIndex = index;
@@ -230,16 +231,16 @@
     function finishSurprise() {
         document.body.style.overflow = '';
         playBtn.textContent = '🎉 Все поздравления просмотрены!';
-        playBtn.style.background = '#8b6b4a';
+        playBtn.style.background = '#B8A898';
         playBtn.disabled = true;
         sliderNav.style.display = 'none';
         const finalSlide = document.createElement('div');
         finalSlide.className = 'slide';
         finalSlide.innerHTML = `
-            <div class="friend-card" style="background: #fff5e6; border-color: var(--gold);">
-                <div class="friend-name" style="font-size: 2.6rem;">💖 Спасибо всем! 💖</div>
+            <div class="friend-card" style="background: #FFF8F0; border-color: var(--gold);">
+                <div class="friend-name" style="font-size: 2.8rem;">💖 Спасибо всем! 💖</div>
                 <div class="friend-greeting" style="font-size: 1.6rem;">Ты — самая любимая!</div>
-                <div style="margin: 1rem 0; font-size: 2rem; font-family: 'Dancing Script', cursive; color: var(--gold-dark);">#КоролеваВладислава 👑</div>
+                <div style="margin: 1rem 0; font-size: 2.2rem; font-family: 'Great Vibes', cursive; color: var(--gold-dark);">#КоролеваВладислава 👑</div>
                 <div style="font-size: 1.2rem; color: #a67c4e;">С днём рождения!</div>
             </div>
         `;
@@ -247,6 +248,12 @@
         goToSlide(totalSlides);
         document.querySelector('.slider-controls').style.display = 'none';
         document.querySelector('.slider-dots').style.display = 'none';
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => launchFirework(
+                Math.random() * window.innerWidth,
+                Math.random() * window.innerHeight * 0.6 + 100
+            ), i * 600);
+        }
     }
 
     playBtn.addEventListener('click', function() {
@@ -257,6 +264,12 @@
         sliderNav.style.display = 'flex';
         goToSlide(0, false);
         resetMediaOnSlide(0);
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => launchFirework(
+                Math.random() * window.innerWidth,
+                Math.random() * window.innerHeight * 0.5 + 100
+            ), i * 400);
+        }
     });
 
     prevBtn.addEventListener('click', function() {
@@ -266,6 +279,7 @@
             clearTimeout(mediaTimeout);
             goToSlide(currentIndex - 1);
             resetMediaOnSlide(currentIndex);
+            launchFirework();
         }
     });
 
@@ -276,6 +290,7 @@
             clearTimeout(mediaTimeout);
             goToSlide(currentIndex + 1);
             resetMediaOnSlide(currentIndex);
+            launchFirework();
         }
     });
 
@@ -286,12 +301,13 @@
             clearTimeout(mediaTimeout);
             goToSlide(currentIndex + 1);
             resetMediaOnSlide(currentIndex);
+            launchFirework();
         } else {
             finishSurprise();
         }
     });
 
-    // ----- 6. Переключение фото детство/взрослая -----
+    // ----- 4. Переключение фото -----
     const childhoodPhoto = document.getElementById('childhoodPhoto');
     const img = childhoodPhoto.querySelector('img');
     let isAdult = false;
@@ -311,6 +327,7 @@
             isAdult = true;
             showToast('🌹 А вот и взрослая Влада! Какая красивая!');
             launchConfetti(20);
+            launchFirework(e.clientX, e.clientY);
         } else {
             img.classList.add('switching');
             setTimeout(() => {
@@ -320,12 +337,13 @@
             isAdult = false;
             showToast('🌸 И снова маленькая принцесса!');
             launchConfetti(20);
+            launchFirework(e.clientX, e.clientY);
         }
     });
 
-    // ----- 7. Конфетти -----
+    // ----- 5. Конфетти -----
     function launchConfetti(count) {
-        const colors = ['#d4af37', '#f0d080', '#ff6b6b', '#ffb8b8', '#ffd93d', '#6bcb77', '#4d96ff'];
+        const colors = ['#E8B84B', '#F5D06A', '#FF6B6B', '#FFB8B8', '#FFD93D', '#6BCB77', '#4D96FF'];
         for (let i = 0; i < count; i++) {
             const piece = document.createElement('div');
             piece.className = 'confetti-piece';
@@ -344,37 +362,62 @@
         }
     }
 
-    // ----- 8. Игра "Переверни карточку" -----
-    let openedCards = 0;
-    const totalCards = document.querySelectorAll('.memory-card').length;
-    const progressBar = document.getElementById('progressBar');
-    const progressText = document.getElementById('progressText');
-    const secretMsg = document.getElementById('secretMessage');
+    // ----- 6. САЛЮТЫ И ФЕЙЕРВЕРКИ -----
+    function launchFirework(x, y) {
+        const container = document.getElementById('fireworks-container');
+        if (!container) return;
 
-    document.querySelectorAll('.memory-card').forEach(card => {
-        card.addEventListener('click', function() {
-            if (!this.classList.contains('flipped')) {
-                this.classList.add('flipped');
-                openedCards++;
-                updateProgress();
-                const secret = this.dataset.secret || 'Секрет!';
-                showToast(`💌 ${secret}`);
-                if (openedCards === totalCards) {
-                    secretMsg.style.display = 'block';
-                    launchConfetti(40);
-                    showToast('🎉 Ты открыла все секреты! Ты — супер!');
-                }
-            }
-        });
-    });
+        const cx = x || Math.random() * window.innerWidth;
+        const cy = y || Math.random() * window.innerHeight * 0.6 + 100;
+        const colors = ['#E8B84B', '#F5D06A', '#FF6B6B', '#FFB8B8', '#FFD93D', '#6BCB77', '#4D96FF', '#FF8A8A', '#FFD700', '#FF69B4'];
 
-    function updateProgress() {
-        const percent = (openedCards / totalCards) * 100;
-        progressBar.style.width = percent + '%';
-        progressText.textContent = `${openedCards} / ${totalCards}`;
+        const particleCount = 40 + Math.floor(Math.random() * 40);
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'firework-particle';
+            const size = Math.random() * 6 + 3;
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 50 + Math.random() * 150;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance - 30;
+
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.left = cx + 'px';
+            particle.style.top = cy + 'px';
+            particle.style.setProperty('--tx', tx + 'px');
+            particle.style.setProperty('--ty', ty + 'px');
+            particle.style.boxShadow = `0 0 ${size * 2}px ${particle.style.background}`;
+            particle.style.animationDuration = (0.8 + Math.random() * 0.8) + 's';
+            particle.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+
+            container.appendChild(particle);
+            setTimeout(() => particle.remove(), 2000);
+        }
+
+        for (let i = 0; i < 15; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'firework-sparkle';
+            const size = Math.random() * 4 + 2;
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 20 + Math.random() * 80;
+
+            sparkle.style.width = size + 'px';
+            sparkle.style.height = size + 'px';
+            sparkle.style.background = '#FFE88A';
+            sparkle.style.left = (cx + Math.cos(angle) * distance) + 'px';
+            sparkle.style.top = (cy + Math.sin(angle) * distance) + 'px';
+            sparkle.style.borderRadius = '50%';
+            sparkle.style.boxShadow = '0 0 10px #FFE88A';
+            sparkle.style.animationDuration = (1 + Math.random() * 0.8) + 's';
+
+            container.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 2000);
+        }
     }
 
-    // ----- 9. Интерактивные слова -----
+    // ----- 7. Интерактивные слова -----
     document.querySelectorAll('.interactive-word').forEach(word => {
         word.addEventListener('click', function(e) {
             const toast = this.dataset.toast || '✨ Магия!';
@@ -385,121 +428,162 @@
                 star.textContent = ['✦', '✧', '✶', '✵', '✴'][Math.floor(Math.random() * 5)];
                 star.style.left = (e.clientX + (Math.random() - 0.5) * 80) + 'px';
                 star.style.top = (e.clientY + (Math.random() - 0.5) * 80) + 'px';
-                star.style.color = ['#d4af37', '#f0d080', '#ffd93d', '#ff6b6b'][Math.floor(Math.random() * 4)];
+                star.style.color = ['#E8B84B', '#F5D06A', '#FFD93D', '#FF6B6B'][Math.floor(Math.random() * 4)];
                 document.body.appendChild(star);
                 setTimeout(() => star.remove(), 1500);
             }
+            launchFirework(e.clientX, e.clientY);
         });
     });
 
-    // ----- 10. Викторина -----
-    const quizData = [
-        { question: 'Какого числа день рождения у Влады?', options: ['7 июля', '8 июня', '9 августа'], correct: 0 },
-        { question: 'Какое любимое блюдо Влады?', options: ['Пицца', 'Суши', 'Паста'], correct: 1 },
-        { question: 'Какой цвет больше всего любит Влада?', options: ['Розовый', 'Золотой', 'Синий'], correct: 1 },
-        { question: 'Где Влада и Никита познакомились?', options: ['В университете', 'В парке', 'На работе'], correct: 0 }
+    // ----- 8. Моя песня -----
+    const playMySongBtn = document.getElementById('playMySong');
+    const myAudio = document.getElementById('myAudio');
+    const vinylRecord = document.getElementById('vinylRecord');
+
+    if (playMySongBtn && myAudio) {
+        let isSongPlaying = false;
+
+        playMySongBtn.addEventListener('click', function() {
+            if (!isSongPlaying) {
+                myAudio.play().catch(e => console.warn('Аудио не запустилось:', e));
+                vinylRecord.classList.add('playing');
+                this.textContent = '⏸ Пауза';
+                isSongPlaying = true;
+                showToast('🎵 Слушай песню от Никиты!');
+                launchConfetti(20);
+                for (let i = 0; i < 4; i++) {
+                    setTimeout(() => launchFirework(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight * 0.5 + 100
+                    ), i * 500);
+                }
+
+                myAudio.onended = function() {
+                    vinylRecord.classList.remove('playing');
+                    playMySongBtn.textContent = '🎵 Включить песню';
+                    isSongPlaying = false;
+                    showToast('💖 Песня закончилась, но моя любовь к тебе — вечна!');
+                    launchConfetti(30);
+                    for (let i = 0; i < 5; i++) {
+                        setTimeout(() => launchFirework(
+                            Math.random() * window.innerWidth,
+                            Math.random() * window.innerHeight * 0.4 + 100
+                        ), i * 400);
+                    }
+                };
+            } else {
+                myAudio.pause();
+                vinylRecord.classList.remove('playing');
+                this.textContent = '🎵 Включить песню';
+                isSongPlaying = false;
+            }
+        });
+    }
+
+    // ----- 9. Свиток предсказаний -----
+    const predictions = [
+        { text: 'В этом году тебя ждёт невероятное путешествие, полное радости и открытий!', from: 'Судьба' },
+        { text: 'Твоя улыбка озарит мир ярче солнца, и все мечты сбудутся.', from: 'Звёзды' },
+        { text: 'Ты встретишь много новых друзей, которые принесут в твою жизнь свет и счастье.', from: 'Вселенная' },
+        { text: 'Любовь будет окружать тебя каждый день, как самый тёплый плед.', from: 'Сердце' },
+        { text: 'Твой талант раскроется в новом деле, и ты достигнешь высот!', from: 'Вдохновение' },
+        { text: 'Каждый день будет приносить маленькое чудо – просто оглянись вокруг.', from: 'Магия' },
+        { text: 'Ты станешь ещё сильнее и мудрее, а все трудности обернутся опытом.', from: 'Жизнь' },
+        { text: 'Счастье придёт в твой дом и останется там навсегда.', from: 'Домовой' },
+        { text: 'Твоя мечта обязательно сбудется, просто верь в неё.', from: 'Мечта' },
+        { text: 'Ты подаришь миру столько тепла, сколько сама получаешь от близких.', from: 'Сердце' },
+        { text: 'Новый год жизни начнётся с яркой, счастливой ноты!', from: 'Муза' },
+        { text: 'Пусть каждый твой шаг будет лёгким, а дорога – освещена золотом.', from: 'Золотой свет' }
     ];
-    let currentQuiz = 0;
-    let quizScore = 0;
-    const quizQuestion = document.getElementById('quizQuestion');
-    const quizOptions = document.getElementById('quizOptions');
-    const quizResult = document.getElementById('quizResult');
-    const quizNextBtn = document.getElementById('quizNextBtn');
 
-    function loadQuiz() {
-        const q = quizData[currentQuiz];
-        quizQuestion.textContent = q.question;
-        quizOptions.innerHTML = '';
-        q.options.forEach((opt, idx) => {
-            const btn = document.createElement('button');
-            btn.textContent = opt;
-            btn.dataset.idx = idx;
-            btn.addEventListener('click', () => checkAnswer(btn, idx));
-            quizOptions.appendChild(btn);
+    const scrollIcon = document.getElementById('scrollIcon');
+    const scrollResult = document.getElementById('scrollResult');
+    const predictionText = document.getElementById('predictionText');
+    const predictionFrom = document.getElementById('predictionFrom');
+    const historyList = document.getElementById('historyList');
+    let usedIndices = [];
+
+    function getRandomPrediction() {
+        if (usedIndices.length >= predictions.length) {
+            usedIndices = [];
+            historyList.innerHTML = '';
+        }
+        let idx;
+        do {
+            idx = Math.floor(Math.random() * predictions.length);
+        } while (usedIndices.includes(idx));
+        usedIndices.push(idx);
+        return predictions[idx];
+    }
+
+    if (scrollIcon) {
+        scrollIcon.addEventListener('click', function() {
+            const pred = getRandomPrediction();
+            predictionText.textContent = pred.text;
+            predictionFrom.textContent = `— ${pred.from}`;
+            scrollResult.classList.add('show');
+            const li = document.createElement('li');
+            li.innerHTML = `<span class="highlight">${pred.from}</span>: ${pred.text}`;
+            historyList.appendChild(li);
+            historyList.scrollTop = historyList.scrollHeight;
+            launchConfetti(10);
+            showToast(`✨ Предсказание от ${pred.from} ✨`);
+            launchFirework();
         });
-        quizResult.style.display = 'none';
-        quizNextBtn.style.display = 'none';
-        quizResult.textContent = '';
     }
 
-    function checkAnswer(btn, idx) {
-        const correct = quizData[currentQuiz].correct;
-        const allBtns = quizOptions.querySelectorAll('button');
-        allBtns.forEach(b => b.disabled = true);
+    // ----- 10. ГАЛЕРЕЯ ПОЖЕЛАНИЙ -----
+    const wishes = [
+        { text: 'Будь счастлива каждый день, как этот!', from: 'Мама' },
+        { text: 'Пусть все твои мечты сбываются!', from: 'Никита' },
+        { text: 'Ты — самое лучшее, что случилось с нами!', from: 'Подруги' },
+        { text: 'Сияй ярче всех звёзд на небе!', from: 'Семья' },
+        { text: 'Пусть удача всегда идёт с тобой рядом!', from: 'Друзья' },
+        { text: 'Любви тебе бесконечной и искренней!', from: 'Сердце' },
+        { text: 'Ты достойна самого лучшего в этом мире!', from: 'Вселенная' },
+        { text: 'С днём рождения, наша королева! 👑', from: 'Все' }
+    ];
 
-        if (idx === correct) {
-            btn.classList.add('correct');
-            quizScore++;
-            showToast('✅ Правильно! Ты знаешь Владу!');
-        } else {
-            btn.classList.add('wrong');
-            allBtns[correct].classList.add('correct');
-            showToast('❌ Не совсем так, но теперь ты знаешь!');
-        }
-        quizResult.style.display = 'block';
-        quizResult.textContent = `Правильных ответов: ${quizScore} из ${currentQuiz + 1}`;
-        if (currentQuiz < quizData.length - 1) {
-            quizNextBtn.style.display = 'inline-block';
-            quizNextBtn.textContent = 'Следующий вопрос';
-        } else {
-            quizNextBtn.style.display = 'inline-block';
-            quizNextBtn.textContent = '🎉 Узнать результат!';
-        }
-    }
+    const wishesGrid = document.getElementById('wishesGrid');
+    const wishesComplete = document.getElementById('wishesComplete');
+    let openedWishes = 0;
+    const totalWishes = wishes.length;
 
-    quizNextBtn.addEventListener('click', function() {
-        currentQuiz++;
-        if (currentQuiz < quizData.length) {
-            loadQuiz();
-        } else {
-            const total = quizData.length;
-            const percent = Math.round((quizScore / total) * 100);
-            let message = '';
-            if (percent === 100) message = 'Ты знаешь Владу на 100%! Ты — лучшая подруга! ❤️';
-            else if (percent >= 75) message = 'Ты очень хорошо знаешь Владу! Молодец! ✨';
-            else if (percent >= 50) message = 'Неплохо, но ты можешь узнать её ещё лучше! 😉';
-            else message = 'Наверное, ты не Влада 😂, но спасибо за участие!';
-            quizQuestion.textContent = '🎊 Ты прошла викторину!';
-            quizOptions.innerHTML = '';
-            quizResult.style.display = 'block';
-            quizResult.textContent = `Твой результат: ${quizScore} из ${total} (${percent}%). ${message}`;
-            quizNextBtn.style.display = 'none';
-            launchConfetti(30);
-            showToast('🎉 Спасибо за участие в викторине!');
-        }
-    });
-    loadQuiz();
-
-    // ----- 11. Сбор сердечек -----
-    let heartsCollected = 0;
-    const heartCountDisplay = document.getElementById('heartCount');
-    const heartsDisplay = document.getElementById('heartsDisplay');
-
-    function generateHearts() {
-        heartsDisplay.innerHTML = '';
-        for (let i = 0; i < 10; i++) {
-            const span = document.createElement('span');
-            span.className = 'hearts-collect';
-            span.textContent = i < heartsCollected ? '❤️' : '🖤';
-            span.dataset.index = i;
-            span.addEventListener('click', function() {
-                if (this.textContent === '🖤') {
-                    this.textContent = '❤️';
-                    heartsCollected++;
-                    heartCountDisplay.textContent = heartsCollected;
-                    showToast('❤️ Сердечко собрано!');
-                    if (heartsCollected === 10) {
-                        showToast('🎉 Ты собрала все сердечки! Ты — королева сердец! 👑');
-                        launchConfetti(50);
+    wishes.forEach((wish, index) => {
+        const star = document.createElement('div');
+        star.className = 'wish-star';
+        star.dataset.index = index;
+        star.innerHTML = `
+            <span class="star-icon">⭐</span>
+            <span class="star-label">${wish.from}</span>
+            <div class="wish-text">${wish.text}</div>
+            <div class="wish-from">— ${wish.from}</div>
+        `;
+        star.addEventListener('click', function() {
+            if (!this.classList.contains('opened')) {
+                this.classList.add('opened');
+                openedWishes++;
+                showToast(`✨ Пожелание от ${wish.from}: ${wish.text}`);
+                launchConfetti(15);
+                launchFirework();
+                if (openedWishes === totalWishes) {
+                    wishesComplete.style.display = 'block';
+                    launchConfetti(40);
+                    showToast('🎉 Ты открыла все пожелания! Ты — самая любимая!');
+                    for (let i = 0; i < 8; i++) {
+                        setTimeout(() => launchFirework(
+                            Math.random() * window.innerWidth,
+                            Math.random() * window.innerHeight * 0.5 + 100
+                        ), i * 400);
                     }
                 }
-            });
-            heartsDisplay.appendChild(span);
-        }
-    }
-    generateHearts();
+            }
+        });
+        wishesGrid.appendChild(star);
+    });
 
-    // ----- 12. Тосты -----
+    // ----- 11. Тосты -----
     function showToast(text) {
         let toast = document.querySelector('.toast');
         if (!toast) {
@@ -515,8 +599,81 @@
         }, 3000);
     }
 
+    // ----- 12. Автоматический фейерверк -----
+    setInterval(() => {
+        if (Math.random() > 0.5) {
+            launchFirework(
+                Math.random() * window.innerWidth,
+                Math.random() * window.innerHeight * 0.5 + 50
+            );
+        }
+    }, 8000);
+
+    // ============================================================
+    // ----- 13. МАГИЧЕСКАЯ МУЗЫКА ДЛЯ СВИТКА ПРЕДСКАЗАНИЙ -----
+    // ============================================================
+    const predictionsSection = document.getElementById('predictions');
+    const magicAudio = document.getElementById('magicAudio');
+    let isMagicMusicPlaying = false;
+
+    if (predictionsSection && magicAudio) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (!isMagicMusicPlaying) {
+                        magicAudio.play().catch(e => {
+                            console.warn('Автозапуск музыки заблокирован:', e);
+                            showToast('🎵 Нажми на свиток, чтобы включить волшебную музыку!');
+                        });
+                        isMagicMusicPlaying = true;
+                        showToast('🎵 Волшебная музыка свитка начинает играть...');
+                        setTimeout(() => launchFirework(
+                            Math.random() * window.innerWidth,
+                            Math.random() * window.innerHeight * 0.3 + 50
+                        ), 300);
+                    }
+                } else {
+                    if (isMagicMusicPlaying) {
+                        magicAudio.pause();
+                        magicAudio.currentTime = 0;
+                        isMagicMusicPlaying = false;
+                        showToast('🔇 Волшебная музыка стихла...');
+                    }
+                }
+            });
+        }, {
+            threshold: 0.25
+        });
+
+        observer.observe(predictionsSection);
+
+        if (scrollIcon) {
+            scrollIcon.addEventListener('click', function() {
+                if (!isMagicMusicPlaying) {
+                    magicAudio.play().catch(e => console.warn('Не удалось запустить музыку:', e));
+                    isMagicMusicPlaying = true;
+                }
+            });
+        }
+
+        document.addEventListener('click', function() {
+            if (isMagicMusicPlaying && magicAudio.paused) {
+                magicAudio.play().catch(e => console.warn('Не удалось запустить музыку:', e));
+            }
+        }, { once: true });
+    }
+
     // ----- Инициализация -----
     goToSlide(0, false);
     sliderNav.style.display = 'none';
     console.log('Сайт готов! С Днём Рождения, Владислава! 👑');
+
+    setTimeout(() => {
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => launchFirework(
+                Math.random() * window.innerWidth,
+                Math.random() * window.innerHeight * 0.4 + 100
+            ), i * 500);
+        }
+    }, 1000);
 })();
