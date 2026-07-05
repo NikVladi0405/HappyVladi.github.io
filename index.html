@@ -5,29 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>С Днём Рождения, любимая!</title>
 
-    <!-- Подключаем Google Fonts с более интересными шрифтами -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Dancing+Script:wght@400;500;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Tangerine:wght@400;700&display=swap" rel="stylesheet" />
 
     <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-    <!-- Контейнер для салютов -->
     <div id="fireworks-container"></div>
-
-    <!-- Фоновые частицы -->
     <div id="particles"></div>
     <div id="floating-balls"></div>
 
-    <!-- Декоративные золотые углы -->
     <div class="corner-decoration top-left"></div>
     <div class="corner-decoration top-right"></div>
     <div class="corner-decoration bottom-left"></div>
     <div class="corner-decoration bottom-right"></div>
 
-    <!-- ============================================================
-    СЕКЦИЯ 1: ПРИВЕТСТВИЕ
-    ============================================================ -->
+    <!-- ===== СЕКЦИЯ 1: ПРИВЕТСТВИЕ ===== -->
     <section id="hero">
         <div class="container hero-content">
             <div class="photo-frame" id="childhoodPhoto">
@@ -55,19 +48,16 @@
         </div>
     </section>
 
-    <!-- ============================================================
-    СЕКЦИЯ 2: МОЯ ПЕСНЯ ДЛЯ ТЕБЯ
-    ============================================================ -->
+    <!-- ===== СЕКЦИЯ 2: МОЯ ПЕСНЯ ===== -->
     <section id="myMessage">
         <div class="container">
             <h2>🎵 Моя песня для тебя</h2>
             <div class="divider"></div>
             <p class="section-subtitle">Эта песня — от всего моего сердца. Нажми на кнопку, чтобы послушать 💕</p>
             <div class="song-wrapper">
-                <div class="song-cover" id="songCover">
+                <div class="song-cover">
                     <div class="vinyl-record" id="vinylRecord">
                         <div class="vinyl-center"></div>
-                        <div class="vinyl-grooves"></div>
                     </div>
                     <div class="song-info">
                         <h3 class="song-title">Для тебя, Влада</h3>
@@ -85,22 +75,19 @@
                     </div>
                     <audio id="myAudio" preload="auto">
                         <source src="audio/my_song.mp3" type="audio/mpeg" />
-                        Твой браузер не поддерживает аудио.
                     </audio>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ============================================================
-    СЕКЦИЯ 3: СВИТОК ПРЕДСКАЗАНИЙ
-    ============================================================ -->
+    <!-- ===== СЕКЦИЯ 3: СВИТОК ПРЕДСКАЗАНИЙ ===== -->
     <section id="predictions">
         <div class="container">
             <h2>✨ Свиток предсказаний ✨</h2>
             <div class="divider"></div>
             <p class="section-subtitle">Кликни на свиток, и он откроет тебе доброе предсказание на новый год жизни!</p>
-            <div class="scroll-wrapper" id="scrollWrapper">
+            <div class="scroll-wrapper">
                 <div class="scroll-icon" id="scrollIcon">
                     <span class="scroll-emoji">📜</span>
                     <span class="scroll-label">Нажми на свиток</span>
@@ -110,22 +97,19 @@
                     <p class="prediction-from" id="predictionFrom">✨</p>
                 </div>
             </div>
-            <div class="scroll-history" id="scrollHistory">
+            <div class="scroll-history">
                 <h3>✨ Уже открытые предсказания</h3>
                 <ul id="historyList"></ul>
             </div>
         </div>
     </section>
 
-    <!-- МАГИЧЕСКАЯ МУЗЫКА ДЛЯ СВИТКА ПРЕДСКАЗАНИЙ -->
+    <!-- Магическая музыка для свитка -->
     <audio id="magicAudio" preload="auto" loop>
         <source src="audio/magicbook.mp3" type="audio/mpeg" />
-        Твой браузер не поддерживает аудио.
     </audio>
 
-    <!-- ============================================================
-    СЕКЦИЯ 4: ГАЛЕРЕЯ ПОЖЕЛАНИЙ
-    ============================================================ -->
+    <!-- ===== СЕКЦИЯ 4: ГАЛЕРЕЯ ПОЖЕЛАНИЙ ===== -->
     <section id="wishes">
         <div class="container">
             <h2>✨ Волшебные пожелания ✨</h2>
@@ -139,34 +123,59 @@
     </section>
 
     <!-- ============================================================
-    СЕКЦИЯ 5: СЮРПРИЗ ОТ ДРУЗЕЙ
+    СЕКЦИЯ 5: СЮРПРИЗ ОТ БЛИЗКИХ (ПЕРЕРАБОТАННЫЙ БЛОК)
     ============================================================ -->
     <section id="surprise">
         <div class="container">
-            <h2>Сюрприз от друзей</h2>
+            <h2>🎁 Сюрприз от близких</h2>
             <div class="divider"></div>
-            <p class="section-subtitle">8 тёплых поздравлений — видео и голоса тех, кто тебя любит.</p>
+            <p class="section-subtitle">8 тёплых поздравлений — видео и голоса тех, кто тебя любит</p>
+
             <div class="surprise-trigger">
-                <button class="magic-btn" id="playSurprise">🎁 Включить сюрприз</button>
+                <button class="magic-btn pulse-btn" id="playSurprise">
+                    <span class="btn-text">🎁 Включить сюрприз</span>
+                    <span class="btn-glow"></span>
+                </button>
             </div>
+
+            <!-- Слайдер с улучшенным дизайном -->
             <div class="slider-wrapper" id="sliderWrapper">
-                <div class="slider-track" id="sliderTrack"></div>
+                <div class="slider-track" id="sliderTrack">
+                    <!-- Слайды генерируются JS -->
+                </div>
+
+                <!-- Декоративные линии -->
+                <div class="slider-lines">
+                    <span class="line left"></span>
+                    <span class="line right"></span>
+                </div>
+
+                <!-- Индикаторы -->
                 <div class="slider-dots" id="sliderDots"></div>
+
+                <!-- Управление -->
                 <div class="slider-controls">
                     <span class="slide-counter" id="slideCounter">1 / 8</span>
-                    <div class="slider-nav" id="sliderNav" style="display: none;">
-                        <button class="nav-btn" id="prevSlide" disabled>◀</button>
-                        <button class="nav-btn" id="nextSlide">▶</button>
-                        <button class="nav-btn" id="skipBtn">⏭ Пропустить</button>
+                    <div class="slider-nav" id="sliderNav">
+                        <button class="nav-btn" id="prevSlide" disabled>
+                            <span class="nav-icon">◀</span>
+                            <span class="nav-label">Назад</span>
+                        </button>
+                        <button class="nav-btn" id="nextSlide">
+                            <span class="nav-label">Вперёд</span>
+                            <span class="nav-icon">▶</span>
+                        </button>
+                        <button class="nav-btn skip-btn" id="skipBtn">
+                            <span class="nav-icon">⏭</span>
+                            <span class="nav-label">Пропустить</span>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ============================================================
-    СЕКЦИЯ 6: ФИНАЛ
-    ============================================================ -->
+    <!-- ===== СЕКЦИЯ 6: ФИНАЛ ===== -->
     <section id="finale">
         <div class="container">
             <div class="hearts-container">❤️ 💛 💖 💗 💘 💝 💕 💞</div>
