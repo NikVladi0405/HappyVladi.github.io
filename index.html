@@ -1,1 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>С Днём Рождения, любимая!</title>
 
+    <!-- Подключаем шрифты Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+    <!-- Подключаем внешний CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+    <!-- Фоновые частицы (генерируются JS) -->
+    <div id="particles"></div>
+
+    <!-- ===== СЕКЦИЯ 1: ПРИВЕТСТВИЕ ===== -->
+    <section id="hero">
+        <div class="container hero-content">
+
+            <!-- Фото в рамке -->
+            <div class="photo-frame">
+                <!-- ЗАМЕНИТЕ ПУТЬ НА ВАШЕ ФОТО -->
+                <img src="img/childhood.jpg" alt="Детство" />
+            </div>
+
+            <!-- Волнистая рамка с поздравлением -->
+            <div class="text-frame">
+                <h1>С Днём Рождения!</h1>
+                <p>
+                    <span class="gold-text">7 июля</span> ровно 22 года назад родилась самая лучшая девушка на свете.
+                </p>
+                <p>
+                    Пусть каждый день приносит радость, счастье и исполнение желаний.<br />
+                    Твоя улыбка — лучшее украшение этого мира. Сияй!
+                </p>
+                <div class="divider"></div>
+                <p class="date">✨ Ты — наше вдохновение ✨</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== СЕКЦИЯ 2: ВОСПОМИНАНИЯ ===== -->
+    <section id="memories">
+        <div class="container">
+            <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #b8860b;">Наши моменты</h2>
+            <div class="divider"></div>
+            <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto; color: #5a4a4a;">
+                Пролистай страницы памяти — в каждой из них частичка нашей любви.
+            </p>
+
+            <div class="memories-grid">
+                <div class="memory-card">
+                    <div class="icon">🌸</div>
+                    <h3>Первая встреча</h3>
+                    <p>Тот самый день, когда наши глаза встретились, и я понял — это судьба.</p>
+                </div>
+                <div class="memory-card">
+                    <div class="icon">☀️</div>
+                    <h3>Наше лето</h3>
+                    <p>Бесконечные прогулки, смех и закаты, которые мы запомним навсегда.</p>
+                </div>
+                <div class="memory-card">
+                    <div class="icon">🌙</div>
+                    <h3>Звёздные ночи</h3>
+                    <p>Разговоры до утра, мечты и планы, которые сбываются.</p>
+                </div>
+                <div class="memory-card">
+                    <div class="icon">💍</div>
+                    <h3>Скоро свадьба</h3>
+                    <p>Ты — моя невеста, и я счастлив, что ты выбрала меня.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== СЕКЦИЯ 3: СЮРПРИЗ ОТ ДРУЗЕЙ ===== -->
+    <section id="surprise">
+        <div class="container">
+            <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #b8860b;">Сюрприз от друзей</h2>
+            <div class="divider"></div>
+            <p style="font-size: 1.2rem; color: #5a4a4a;">
+                8 тёплых поздравлений — видео и голоса тех, кто тебя любит.
+            </p>
+
+            <div class="surprise-trigger">
+                <button class="surprise-btn" id="playSurprise">🎁 Включить сюрприз</button>
+            </div>
+
+            <div class="surprise-grid" id="surpriseGrid">
+                <!-- Карточки будут сгенерированы скриптом -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== СЕКЦИЯ 4: ФИНАЛ ===== -->
+    <section id="finale">
+        <div class="container">
+            <div class="hearts-container">
+                ❤️ 💛 💖 💗 💘 💝 💕 💞
+            </div>
+            <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #b8860b; margin: 1rem 0;">
+                Ты — моя Вселенная
+            </h2>
+            <p style="font-size: 1.3rem; max-width: 500px; margin: 0 auto; color: #4a3a3a;">
+                Спасибо, что ты есть. Этот день — твой, и мы хотим, чтобы ты сияла всегда.
+            </p>
+            <div style="margin-top: 2rem; font-size: 1.2rem; color: #a67c4e;">
+                С любовью, твой жених ❤️
+            </div>
+        </div>
+    </section>
+
+    <!-- Подключаем внешний JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>

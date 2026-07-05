@@ -1,0 +1,361 @@
+/* ----- Базовые сбросы и настройки ----- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(145deg, #fdeff2 0%, #fff5e6 100%);
+    color: #4a3a3a;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    z-index: 2;
+    position: relative;
+}
+
+/* ----- Золотые акценты ----- */
+.gold-text {
+    color: #b8860b;
+    text-shadow: 0 0 8px rgba(184, 134, 11, 0.3);
+}
+
+.gold-border {
+    border: 2px solid #d4af37;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2), inset 0 0 20px rgba(212, 175, 55, 0.05);
+}
+
+.divider {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #d4af37, transparent);
+    margin: 1rem auto;
+}
+
+/* ----- Секция 1: Приветствие ----- */
+#hero {
+    background: radial-gradient(circle at 30% 40%, #ffe9e0 0%, #fce4e1 100%);
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.photo-frame {
+    position: relative;
+    padding: 12px;
+    background: #fff8f0;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    transform: rotate(-1deg);
+    transition: transform 0.5s ease;
+    border: 3px solid #d4af37;
+    max-width: 380px;
+    width: 100%;
+}
+
+.photo-frame::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border: 2px solid rgba(212, 175, 55, 0.4);
+    border-radius: 16px;
+    pointer-events: none;
+    animation: artifactPulse 3s infinite alternate;
+}
+
+@keyframes artifactPulse {
+    0% { opacity: 0.6; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.02); }
+}
+
+.photo-frame::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.2 0"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.08"/></svg>');
+    background-size: 200px 200px;
+    opacity: 0.3;
+    pointer-events: none;
+    border-radius: 12px;
+    mix-blend-mode: multiply;
+}
+
+.photo-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    filter: sepia(0.15) saturate(1.1);
+    transition: filter 0.5s;
+}
+
+.photo-frame:hover img {
+    filter: sepia(0) saturate(1.3);
+}
+
+.text-frame {
+    position: relative;
+    padding: 1.5rem 2.5rem;
+    background: rgba(255, 248, 240, 0.7);
+    backdrop-filter: blur(4px);
+    border-radius: 30px 10px 30px 10px;
+    border: 2px solid #d4af37;
+    box-shadow: 0 5px 30px rgba(212, 175, 55, 0.15);
+    max-width: 700px;
+    margin-top: 1rem;
+    transform: rotate(0.5deg);
+    transition: all 0.3s;
+}
+
+.text-frame::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border: 2px dashed rgba(212, 175, 55, 0.3);
+    border-radius: 40px 15px 40px 15px;
+    animation: waveBorder 6s linear infinite;
+}
+
+@keyframes waveBorder {
+    0% { border-radius: 40px 15px 40px 15px; }
+    50% { border-radius: 15px 40px 15px 40px; }
+    100% { border-radius: 40px 15px 40px 15px; }
+}
+
+.text-frame h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #b8860b;
+    margin-bottom: 0.5rem;
+}
+
+.text-frame p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #4a3a3a;
+}
+
+.text-frame .date {
+    font-size: 1rem;
+    color: #a67c4e;
+    letter-spacing: 2px;
+    margin-top: 0.5rem;
+}
+
+/* ----- Секция 2: Воспоминания ----- */
+#memories {
+    background: linear-gradient(135deg, #fff5ee 0%, #fdf0e6 100%);
+    padding: 4rem 1.5rem;
+}
+
+.memories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.memory-card {
+    background: rgba(255, 248, 240, 0.7);
+    backdrop-filter: blur(4px);
+    padding: 1.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+    transition: transform 0.4s ease, box-shadow 0.4s;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeUp 0.8s forwards;
+}
+
+.memory-card:nth-child(1) { animation-delay: 0.1s; }
+.memory-card:nth-child(2) { animation-delay: 0.3s; }
+.memory-card:nth-child(3) { animation-delay: 0.5s; }
+.memory-card:nth-child(4) { animation-delay: 0.7s; }
+
+@keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.memory-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+}
+
+.memory-card .icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.memory-card h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem;
+    color: #b8860b;
+    margin-bottom: 0.3rem;
+}
+
+.memory-card p {
+    font-size: 1rem;
+    color: #5a4a4a;
+}
+
+/* ----- Секция 3: Сюрприз ----- */
+#surprise {
+    background: radial-gradient(circle at 70% 20%, #fce4e1, #fdeff2);
+    padding: 4rem 1.5rem;
+}
+
+.surprise-trigger {
+    margin: 2rem 0 3rem;
+}
+
+.surprise-btn {
+    background: #d4af37;
+    border: none;
+    color: #fff;
+    font-size: 1.4rem;
+    font-family: 'Dancing Script', cursive;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    box-shadow: 0 5px 25px rgba(212, 175, 55, 0.4);
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 1px;
+}
+
+.surprise-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 35px rgba(212, 175, 55, 0.6);
+    background: #c4a030;
+}
+
+.surprise-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+    opacity: 0;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(40px);
+}
+
+.surprise-grid.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.friend-card {
+    background: rgba(255, 248, 240, 0.6);
+    backdrop-filter: blur(6px);
+    border-radius: 20px;
+    padding: 1.2rem;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+}
+
+.friend-card:hover {
+    transform: scale(1.02);
+}
+
+.friend-card video,
+.friend-card audio {
+    width: 100%;
+    border-radius: 12px;
+    margin-top: 0.5rem;
+    background: #1a1a1a;
+}
+
+.friend-card .name {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    color: #b8860b;
+    margin: 0.5rem 0 0.2rem;
+}
+
+.friend-card .message {
+    font-size: 0.95rem;
+    color: #4a3a3a;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+}
+
+/* ----- Финал ----- */
+#finale {
+    background: linear-gradient(0deg, #fdeff2, #fff5e6);
+    min-height: 60vh;
+    padding: 3rem 1.5rem;
+}
+
+.hearts-container {
+    font-size: 2.5rem;
+    letter-spacing: 12px;
+    animation: floatHearts 3s ease-in-out infinite alternate;
+}
+
+@keyframes floatHearts {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-20px) scale(1.05); }
+}
+
+/* ----- Адаптив ----- */
+@media (max-width: 700px) {
+    .text-frame h1 { font-size: 2.2rem; }
+    .text-frame p { font-size: 1rem; }
+    .photo-frame { max-width: 280px; }
+}
+
+/* ----- Фоновые частицы (генерируются JS) ----- */
+#particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.particle {
+    position: absolute;
+    background: radial-gradient(circle, #d4af37, transparent);
+    border-radius: 50%;
+    opacity: 0.15;
+    pointer-events: none;
+    animation: floatParticle 12s infinite alternate ease-in-out;
+}
+
+@keyframes floatParticle {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(50px, -80px) scale(1.8); }
+}
