@@ -5,44 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>С Днём Рождения, любимая!</title>
 
-    <!-- Подключаем шрифты Google -->
+    <!-- Шрифты -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
-    <!-- Подключаем внешний CSS -->
+    <!-- CSS -->
     <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-    <!-- Фоновые частицы (генерируются JS) -->
+    <!-- Фоновые частицы -->
     <div id="particles"></div>
 
-    <!-- ===== СЕКЦИЯ 1: ПРИВЕТСТВИЕ ===== -->
+    <!-- СЕКЦИЯ 1: ПРИВЕТСТВИЕ -->
     <section id="hero">
         <div class="container hero-content">
-
-            <!-- Фото в рамке -->
             <div class="photo-frame">
                 <img src="img/childhood.jpg" alt="Детство" />
             </div>
-
-            <!-- Волнистая рамка с поздравлением -->
             <div class="text-frame">
                 <h1>С Днём Рождения!</h1>
-                <p>
-                    <span class="gold-text">7 июля</span> ровно 22 года назад родилась самая лучшая девушка на свете.
-                </p>
-                <p>
-                    Пусть каждый день приносит радость, счастье и исполнение желаний.<br />
-                    Твоя улыбка — лучшее украшение этого мира. Сияй!
-                </p>
+                <p><span class="gold-text">7 июля</span> ровно 22 года назад родилась самая лучшая девушка на свете.</p>
+                <p>Пусть каждый день приносит радость, счастье и исполнение желаний.<br />Твоя улыбка — лучшее украшение этого мира. Сияй!</p>
                 <div class="divider"></div>
                 <p class="date">✨ Ты — наше вдохновение ✨</p>
             </div>
-
         </div>
     </section>
 
-    <!-- ===== СЕКЦИЯ 2: ТЁПЛЫЕ ВОСПОМИНАНИЯ ===== -->
+    <!-- СЕКЦИЯ 2: ТЁПЛЫЕ ВОСПОМИНАНИЯ -->
     <section id="memories">
         <div class="container">
             <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #b8860b;">Тёплые воспоминания</h2>
@@ -50,7 +40,6 @@
             <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto; color: #5a4a4a;">
                 С каждым из вас связаны самые светлые моменты её жизни.
             </p>
-
             <div class="memories-grid">
                 <div class="memory-card">
                     <div class="icon">🌹</div>
@@ -76,7 +65,7 @@
         </div>
     </section>
 
-    <!-- ===== СЕКЦИЯ 3: СЮРПРИЗ ОТ ДРУЗЕЙ (КАРУСЕЛЬ) ===== -->
+    <!-- СЕКЦИЯ 3: СЮРПРИЗ ОТ ДРУЗЕЙ (КАРУСЕЛЬ) -->
     <section id="surprise">
         <div class="container">
             <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #b8860b;">Сюрприз от друзей</h2>
@@ -90,30 +79,32 @@
                 <button class="surprise-btn" id="playSurprise">🎁 Включить сюрприз</button>
             </div>
 
-            <!-- Контейнер для слайдера -->
+            <!-- Слайдер -->
             <div class="slider-wrapper" id="sliderWrapper">
                 <div class="slider-track" id="sliderTrack">
                     <!-- Слайды будут добавлены скриптом -->
                 </div>
-                <!-- Индикатор прогресса -->
-                <div class="slider-progress" id="sliderProgress">
-                    <span id="currentSlide">1</span> / <span id="totalSlides">8</span>
-                </div>
-                <!-- Кнопки навигации (появятся после запуска) -->
-                <div class="slider-nav" id="sliderNav" style="display: none;">
-                    <button class="nav-btn" id="prevSlide" disabled>◀</button>
-                    <button class="nav-btn" id="nextSlide">▶</button>
+
+                <!-- Индикаторы -->
+                <div class="slider-dots" id="sliderDots"></div>
+
+                <!-- Прогресс и кнопки -->
+                <div class="slider-controls">
+                    <span class="slide-counter" id="slideCounter">1 / 8</span>
+                    <div class="slider-nav" id="sliderNav" style="display: none;">
+                        <button class="nav-btn" id="prevSlide" disabled>◀</button>
+                        <button class="nav-btn" id="nextSlide">▶</button>
+                        <button class="nav-btn" id="skipBtn">⏭ Пропустить</button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== СЕКЦИЯ 4: ФИНАЛ ===== -->
+    <!-- СЕКЦИЯ 4: ФИНАЛ -->
     <section id="finale">
         <div class="container">
-            <div class="hearts-container">
-                ❤️ 💛 💖 💗 💘 💝 💕 💞
-            </div>
+            <div class="hearts-container">❤️ 💛 💖 💗 💘 💝 💕 💞</div>
             <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #b8860b; margin: 1rem 0;">
                 Ты — моя Вселенная
             </h2>
@@ -126,7 +117,6 @@
         </div>
     </section>
 
-    <!-- Подключаем внешний JavaScript -->
     <script src="js/script.js"></script>
 </body>
 </html>
