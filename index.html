@@ -22,7 +22,6 @@
 
             <!-- Фото в рамке -->
             <div class="photo-frame">
-                <!-- ЗАМЕНИТЕ ПУТЬ НА ВАШЕ ФОТО -->
                 <img src="img/childhood.jpg" alt="Детство" />
             </div>
 
@@ -43,41 +42,41 @@
         </div>
     </section>
 
-    <!-- ===== СЕКЦИЯ 2: ВОСПОМИНАНИЯ ===== -->
+    <!-- ===== СЕКЦИЯ 2: ТЁПЛЫЕ ВОСПОМИНАНИЯ ===== -->
     <section id="memories">
         <div class="container">
-            <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #b8860b;">Наши моменты</h2>
+            <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #b8860b;">Тёплые воспоминания</h2>
             <div class="divider"></div>
             <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto; color: #5a4a4a;">
-                Пролистай страницы памяти — в каждой из них частичка нашей любви.
+                С каждым из вас связаны самые светлые моменты её жизни.
             </p>
 
             <div class="memories-grid">
                 <div class="memory-card">
-                    <div class="icon">🌸</div>
-                    <h3>Первая встреча</h3>
-                    <p>Тот самый день, когда наши глаза встретились, и я понял — это судьба.</p>
+                    <div class="icon">🌹</div>
+                    <h3>С мамой</h3>
+                    <p>Самые тёплые объятия и бесконечная любовь. Ты — мой ангел-хранитель.</p>
                 </div>
                 <div class="memory-card">
-                    <div class="icon">☀️</div>
-                    <h3>Наше лето</h3>
-                    <p>Бесконечные прогулки, смех и закаты, которые мы запомним навсегда.</p>
+                    <div class="icon">👯</div>
+                    <h3>С подругами</h3>
+                    <p>Девчонки, с которыми мы прошли через всё. Смех, слёзы и миллион воспоминаний.</p>
                 </div>
                 <div class="memory-card">
-                    <div class="icon">🌙</div>
-                    <h3>Звёздные ночи</h3>
-                    <p>Разговоры до утра, мечты и планы, которые сбываются.</p>
+                    <div class="icon">💑</div>
+                    <h3>С любимым</h3>
+                    <p>Тот самый день, когда я понял, что ты — моя судьба. Наша история только начинается.</p>
                 </div>
                 <div class="memory-card">
-                    <div class="icon">💍</div>
-                    <h3>Скоро свадьба</h3>
-                    <p>Ты — моя невеста, и я счастлив, что ты выбрала меня.</p>
+                    <div class="icon">🏠</div>
+                    <h3>С семьёй</h3>
+                    <p>Родные люди, которые всегда рядом. Ты — наша гордость и радость.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== СЕКЦИЯ 3: СЮРПРИЗ ОТ ДРУЗЕЙ ===== -->
+    <!-- ===== СЕКЦИЯ 3: СЮРПРИЗ ОТ ДРУЗЕЙ (КАРУСЕЛЬ) ===== -->
     <section id="surprise">
         <div class="container">
             <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #b8860b;">Сюрприз от друзей</h2>
@@ -86,12 +85,25 @@
                 8 тёплых поздравлений — видео и голоса тех, кто тебя любит.
             </p>
 
+            <!-- Кнопка запуска -->
             <div class="surprise-trigger">
                 <button class="surprise-btn" id="playSurprise">🎁 Включить сюрприз</button>
             </div>
 
-            <div class="surprise-grid" id="surpriseGrid">
-                <!-- Карточки будут сгенерированы скриптом -->
+            <!-- Контейнер для слайдера -->
+            <div class="slider-wrapper" id="sliderWrapper">
+                <div class="slider-track" id="sliderTrack">
+                    <!-- Слайды будут добавлены скриптом -->
+                </div>
+                <!-- Индикатор прогресса -->
+                <div class="slider-progress" id="sliderProgress">
+                    <span id="currentSlide">1</span> / <span id="totalSlides">8</span>
+                </div>
+                <!-- Кнопки навигации (появятся после запуска) -->
+                <div class="slider-nav" id="sliderNav" style="display: none;">
+                    <button class="nav-btn" id="prevSlide" disabled>◀</button>
+                    <button class="nav-btn" id="nextSlide">▶</button>
+                </div>
             </div>
         </div>
     </section>
