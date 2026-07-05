@@ -20,7 +20,7 @@
     // Для каждого можно указать фото (положите в img/friends/ с тем же именем, например, mama.jpg)
     const friends = [
         { name: 'Мама', message: 'С днём рождения, Дочка! Ты — солнце!', photo: 'img/friends/mama.jpg', video: 'video/friend1.mp4', audio: 'audio/friend1.mp3' },
-        { name: 'Никита', message: 'Пусть мечты сбываются!', photo: 'img/friends/nikita.jpg', video: 'video/friend2.mp4', audio: 'audio/Nikita.ogg' },
+        { name: 'Никита', message: 'Пусть мечты сбываются!', photo: 'img/friends/nikita.jpg', video: 'video/nikita.mp4', audio: 'audio/Nikita.ogg' },
         { name: 'Малика', message: 'Ты — невероятная! Обнимаю)', photo: 'img/friends/malika.jpg', video: 'video/friend3.mp4', audio: 'audio/friend3.mp3' },
         { name: 'Ирина', message: 'Пусть жизнь будет сладкой, как мёд!', photo: 'img/friends/irina.jpg', video: 'video/friend4.mp4', audio: 'audio/friend4.mp3' },
         { name: 'Ангелина', message: 'Самой красивой невесте! ❤️', photo: 'img/friends/angelina.jpg', video: 'video/friend5.mp4', audio: 'audio/friend5.mp3' },
