@@ -5,18 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>С Днём Рождения, любимая!</title>
 
-    <!-- Шрифты -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-
-    <!-- CSS -->
     <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-    <!-- Фоновые частицы -->
+    <!-- Фоновые частицы и летающие шары -->
     <div id="particles"></div>
+    <div id="floating-balls"></div>
 
-    <!-- Декоративные золотые углы -->
+    <!-- Декоративные углы -->
     <div class="corner-decoration top-left"></div>
     <div class="corner-decoration top-right"></div>
     <div class="corner-decoration bottom-left"></div>
@@ -26,72 +24,121 @@
     <section id="hero">
         <div class="container hero-content">
             <div class="photo-frame" id="childhoodPhoto">
-                <!-- data-adult – путь к взрослому фото Влады -->
                 <img src="img/childhood.jpg" alt="Детство" data-adult="img/vlada.jpg" />
                 <div class="frame-glow"></div>
-                <div class="click-hint">👆 Нажми на фото</div>
+                <div class="click-hint always-visible">👆 Нажми на фото, чтобы увидеть взрослую Владу!</div>
             </div>
             <div class="text-frame">
                 <div class="text-frame-inner">
                     <h1>С Днём Рождения!</h1>
-                    <p><span class="gold-text">7 июля</span> ровно 22 года назад родилась самая лучшая девушка на свете.</p>
-                    <p>Пусть каждый день приносит радость, счастье и исполнение желаний.<br />Твоя улыбка — лучшее украшение этого мира. Сияй!</p>
+                    <p>
+                        <span class="gold-text interactive-word" data-toast="🌹 7 июля — магическая дата!">7 июля</span>
+                        ровно 22 года назад родилась самая лучшая девушка на свете.
+                    </p>
+                    <p>
+                        Пусть каждый день приносит радость, счастье и исполнение желаний.<br />
+                        Твоя улыбка — лучшее украшение этого мира. Сияй!
+                    </p>
                     <div class="divider"></div>
-                    <p class="date">✨ Ты — наше вдохновение ✨</p>
+                    <p class="date interactive-word" data-toast="✨ Ты вдохновляешь всех вокруг!">✨ Ты — наше вдохновение ✨</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- СЕКЦИЯ 2: ТЁПЛЫЕ ВОСПОМИНАНИЯ -->
+    <!-- СЕКЦИЯ 2: ТЁПЛЫЕ ВОСПОМИНАНИЯ (ИГРА) -->
     <section id="memories">
         <div class="container">
             <h2>Тёплые воспоминания</h2>
             <div class="divider"></div>
-            <p class="section-subtitle">С каждым из вас связаны самые светлые моменты её жизни.</p>
+            <p class="section-subtitle">Кликни на каждую карточку, чтобы открыть секретное послание 💌</p>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
+                <span class="progress-text" id="progressText">0 / 4</span>
+            </div>
             <div class="memories-grid">
-                <div class="memory-card" data-person="мама">
-                    <div class="icon">🌹</div>
-                    <h3>С мамой</h3>
-                    <p>Самые тёплые объятия и бесконечная любовь. Ты — мой ангел-хранитель.</p>
+                <div class="memory-card" data-person="мама" data-secret="Мама — твой самый верный друг навсегда!">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="icon">🌹</div>
+                            <h3>С мамой</h3>
+                            <p>Самые тёплые объятия и бесконечная любовь.</p>
+                        </div>
+                        <div class="card-back">
+                            <p>✨ Мама — твой самый верный друг навсегда! ✨</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="memory-card" data-person="подруги">
-                    <div class="icon">👯</div>
-                    <h3>С подругами</h3>
-                    <p>Девчонки, с которыми мы прошли через всё. Смех, слёзы и миллион воспоминаний.</p>
+                <div class="memory-card" data-person="подруги" data-secret="Подруги — это вторая семья, которая всегда поддержит!">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="icon">👯</div>
+                            <h3>С подругами</h3>
+                            <p>Девчонки, с которыми мы прошли через всё.</p>
+                        </div>
+                        <div class="card-back">
+                            <p>✨ Подруги — это вторая семья, которая всегда поддержит! ✨</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="memory-card" data-person="жених">
-                    <div class="icon">💑</div>
-                    <h3>С любимым</h3>
-                    <p>Тот самый день, когда я понял, что ты — моя судьба. Наша история только начинается.</p>
+                <div class="memory-card" data-person="жених" data-secret="С любимым каждый день — праздник!">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="icon">💑</div>
+                            <h3>С любимым</h3>
+                            <p>Тот самый день, когда я понял, что ты — моя судьба.</p>
+                        </div>
+                        <div class="card-back">
+                            <p>✨ С любимым каждый день — праздник! ✨</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="memory-card" data-person="семья">
-                    <div class="icon">🏠</div>
-                    <h3>С семьёй</h3>
-                    <p>Родные люди, которые всегда рядом. Ты — наша гордость и радость.</p>
+                <div class="memory-card" data-person="семья" data-secret="Семья — это опора и бесконечная любовь!">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="icon">🏠</div>
+                            <h3>С семьёй</h3>
+                            <p>Родные люди, которые всегда рядом.</p>
+                        </div>
+                        <div class="card-back">
+                            <p>✨ Семья — это опора и бесконечная любовь! ✨</p>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div id="secretMessage" style="display: none; margin-top: 2rem; font-size: 1.5rem; color: var(--gold-dark); font-family: 'Dancing Script', cursive;">
+                🎉 Ты открыла все секреты! Ты — самая любознательная и любимая! 🎉
             </div>
         </div>
     </section>
 
-    <!-- СЕКЦИЯ 3: СЮРПРИЗ ОТ ДРУЗЕЙ -->
+    <!-- СЕКЦИЯ 3: ВИКТОРИНА О ВЛАДЕ -->
+    <section id="quiz">
+        <div class="container">
+            <h2>✨ Викторина о Владиславе ✨</h2>
+            <div class="divider"></div>
+            <p class="section-subtitle">Проверь, как хорошо ты знаешь нашу именинницу!</p>
+            <div id="quizContainer">
+                <div id="quizQuestion"></div>
+                <div id="quizOptions"></div>
+                <div id="quizResult" style="display: none;"></div>
+                <button id="quizNextBtn" style="display: none;">Следующий вопрос</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ 4: СЮРПРИЗ ОТ ДРУЗЕЙ -->
     <section id="surprise">
         <div class="container">
             <h2>Сюрприз от друзей</h2>
             <div class="divider"></div>
             <p class="section-subtitle">8 тёплых поздравлений — видео и голоса тех, кто тебя любит.</p>
-
             <div class="surprise-trigger">
                 <button class="surprise-btn" id="playSurprise">🎁 Включить сюрприз</button>
             </div>
-
             <div class="slider-wrapper" id="sliderWrapper">
-                <div class="slider-track" id="sliderTrack">
-                    <!-- Слайды генерируются JS -->
-                </div>
-
+                <div class="slider-track" id="sliderTrack"></div>
                 <div class="slider-dots" id="sliderDots"></div>
-
                 <div class="slider-controls">
                     <span class="slide-counter" id="slideCounter">1 / 8</span>
                     <div class="slider-nav" id="sliderNav" style="display: none;">
@@ -104,7 +151,7 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ 4: ФИНАЛ -->
+    <!-- СЕКЦИЯ 5: ФИНАЛ -->
     <section id="finale">
         <div class="container">
             <div class="hearts-container">❤️ 💛 💖 💗 💘 💝 💕 💞</div>
@@ -112,6 +159,13 @@
             <p class="finale-text">Спасибо, что ты есть. Этот день — твой, и мы хотим, чтобы ты сияла всегда.</p>
             <div class="finale-signature">С любовью, твой жених ❤️</div>
             <div class="hash-tag">#КоролеваВладислава 👑</div>
+            <!-- Сбор сердечек -->
+            <div id="heartCollector">
+                <span>Собери сердечки: </span>
+                <span id="heartCount">0</span>
+                <span> / 10 ❤️</span>
+                <div style="margin-top: 0.5rem; font-size: 2rem;" id="heartsDisplay"></div>
+            </div>
         </div>
     </section>
 
