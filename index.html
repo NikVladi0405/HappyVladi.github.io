@@ -16,18 +16,27 @@
     <!-- Фоновые частицы -->
     <div id="particles"></div>
 
+    <!-- Декоративные золотые элементы (углы) -->
+    <div class="corner-decoration top-left"></div>
+    <div class="corner-decoration top-right"></div>
+    <div class="corner-decoration bottom-left"></div>
+    <div class="corner-decoration bottom-right"></div>
+
     <!-- СЕКЦИЯ 1: ПРИВЕТСТВИЕ -->
     <section id="hero">
         <div class="container hero-content">
-            <div class="photo-frame">
+            <div class="photo-frame" id="childhoodPhoto">
                 <img src="img/childhood.jpg" alt="Детство" />
+                <div class="frame-glow"></div>
             </div>
             <div class="text-frame">
-                <h1>С Днём Рождения!</h1>
-                <p><span class="gold-text">7 июля</span> ровно 22 года назад родилась самая лучшая девушка на свете.</p>
-                <p>Пусть каждый день приносит радость, счастье и исполнение желаний.<br />Твоя улыбка — лучшее украшение этого мира. Сияй!</p>
-                <div class="divider"></div>
-                <p class="date">✨ Ты — наше вдохновение ✨</p>
+                <div class="text-frame-inner">
+                    <h1>С Днём Рождения!</h1>
+                    <p><span class="gold-text">7 июля</span> ровно 22 года назад родилась самая лучшая девушка на свете.</p>
+                    <p>Пусть каждый день приносит радость, счастье и исполнение желаний.<br />Твоя улыбка — лучшее украшение этого мира. Сияй!</p>
+                    <div class="divider"></div>
+                    <p class="date">✨ Ты — наше вдохновение ✨</p>
+                </div>
             </div>
         </div>
     </section>
@@ -35,28 +44,26 @@
     <!-- СЕКЦИЯ 2: ТЁПЛЫЕ ВОСПОМИНАНИЯ -->
     <section id="memories">
         <div class="container">
-            <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #b8860b;">Тёплые воспоминания</h2>
+            <h2>Тёплые воспоминания</h2>
             <div class="divider"></div>
-            <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto; color: #5a4a4a;">
-                С каждым из вас связаны самые светлые моменты её жизни.
-            </p>
+            <p class="section-subtitle">С каждым из вас связаны самые светлые моменты её жизни.</p>
             <div class="memories-grid">
-                <div class="memory-card">
+                <div class="memory-card" data-person="мама">
                     <div class="icon">🌹</div>
                     <h3>С мамой</h3>
                     <p>Самые тёплые объятия и бесконечная любовь. Ты — мой ангел-хранитель.</p>
                 </div>
-                <div class="memory-card">
+                <div class="memory-card" data-person="подруги">
                     <div class="icon">👯</div>
                     <h3>С подругами</h3>
                     <p>Девчонки, с которыми мы прошли через всё. Смех, слёзы и миллион воспоминаний.</p>
                 </div>
-                <div class="memory-card">
+                <div class="memory-card" data-person="жених">
                     <div class="icon">💑</div>
                     <h3>С любимым</h3>
                     <p>Тот самый день, когда я понял, что ты — моя судьба. Наша история только начинается.</p>
                 </div>
-                <div class="memory-card">
+                <div class="memory-card" data-person="семья">
                     <div class="icon">🏠</div>
                     <h3>С семьёй</h3>
                     <p>Родные люди, которые всегда рядом. Ты — наша гордость и радость.</p>
@@ -65,30 +72,24 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ 3: СЮРПРИЗ ОТ ДРУЗЕЙ (КАРУСЕЛЬ) -->
+    <!-- СЕКЦИЯ 3: СЮРПРИЗ ОТ ДРУЗЕЙ -->
     <section id="surprise">
         <div class="container">
-            <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #b8860b;">Сюрприз от друзей</h2>
+            <h2>Сюрприз от друзей</h2>
             <div class="divider"></div>
-            <p style="font-size: 1.2rem; color: #5a4a4a;">
-                8 тёплых поздравлений — видео и голоса тех, кто тебя любит.
-            </p>
+            <p class="section-subtitle">8 тёплых поздравлений — видео и голоса тех, кто тебя любит.</p>
 
-            <!-- Кнопка запуска -->
             <div class="surprise-trigger">
                 <button class="surprise-btn" id="playSurprise">🎁 Включить сюрприз</button>
             </div>
 
-            <!-- Слайдер -->
             <div class="slider-wrapper" id="sliderWrapper">
                 <div class="slider-track" id="sliderTrack">
-                    <!-- Слайды будут добавлены скриптом -->
+                    <!-- Слайды генерируются JS -->
                 </div>
 
-                <!-- Индикаторы -->
                 <div class="slider-dots" id="sliderDots"></div>
 
-                <!-- Прогресс и кнопки -->
                 <div class="slider-controls">
                     <span class="slide-counter" id="slideCounter">1 / 8</span>
                     <div class="slider-nav" id="sliderNav" style="display: none;">
@@ -105,15 +106,10 @@
     <section id="finale">
         <div class="container">
             <div class="hearts-container">❤️ 💛 💖 💗 💘 💝 💕 💞</div>
-            <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #b8860b; margin: 1rem 0;">
-                Ты — моя Вселенная
-            </h2>
-            <p style="font-size: 1.3rem; max-width: 500px; margin: 0 auto; color: #4a3a3a;">
-                Спасибо, что ты есть. Этот день — твой, и мы хотим, чтобы ты сияла всегда.
-            </p>
-            <div style="margin-top: 2rem; font-size: 1.2rem; color: #a67c4e;">
-                С любовью, твой жених ❤️
-            </div>
+            <h2>Ты — моя Вселенная</h2>
+            <p class="finale-text">Спасибо, что ты есть. Этот день — твой, и мы хотим, чтобы ты сияла всегда.</p>
+            <div class="finale-signature">С любовью, твой жених ❤️</div>
+            <div class="hash-tag">#КоролеваВладислава 👑</div>
         </div>
     </section>
 

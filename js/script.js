@@ -16,8 +16,7 @@
         particlesContainer.appendChild(p);
     }
 
-    // ----- 2. Данные друзей (первый — мама) -----
-    // Для каждого можно указать фото (положите в img/friends/ с тем же именем, например, mama.jpg)
+    // ----- 2. Данные друзей (замените пути) -----
     const friends = [
         { name: 'Мама', message: 'С днём рождения, Дочка! Ты — солнце!', photo: 'img/friends/mama.jpg', video: 'video/friend1.mp4', audio: 'audio/friend1.mp3' },
         { name: 'Никита', message: 'Пусть мечты сбываются!', photo: 'img/friends/nikita.jpg', video: 'video/friend2.mp4', audio: 'audio/Nikita.ogg' },
@@ -41,17 +40,13 @@
 
     let currentIndex = 0;
     let isPlaying = false;
-    let autoPlayTimer = null;
     let mediaTimeout = null;
     let totalSlides = friends.length;
-
-    // Храним ссылки на текущие медиа-элементы для управления
     let currentVideo = null;
     let currentAudio = null;
 
     // ----- 4. Создание слайдов и точек -----
     friends.forEach((f, index) => {
-        // Слайд
         const slide = document.createElement('div');
         slide.className = 'slide';
         if (index === 0) slide.classList.add('active');
@@ -62,45 +57,51 @@
         // Фото
         const img = document.createElement('img');
         img.className = 'friend-photo';
-        img.src = f.photo || 'img/default-avatar.jpg'; // если фото нет
+        img.src = f.photo || 'img/default-avatar.jpg';
         img.alt = f.name;
         img.loading = 'lazy';
-        // Если фото не загрузится, покажем инициалы
         img.onerror = function() {
             this.style.display = 'none';
             const fallback = document.createElement('div');
             fallback.className = 'friend-photo fallback';
             fallback.textContent = f.name.charAt(0);
-            fallback.style.cssText = 'display:flex; align-items:center; justify-content:center; font-size:3rem; background:#d4af37; color:#fff;';
+            fallback.style.cssText = 'display:flex; align-items:center; justify-content:center; font-size:3rem; background:var(--gold); color:#fff; width:130px; height:130px; border-radius:50%; margin:0 auto 0.8rem; border:4px solid var(--gold);';
             this.parentNode.insertBefore(fallback, this);
         };
+        img.addEventListener('click', function(e) {
+            showToast(`💖 ${f.name} — ты в моём сердце!`);
+        });
         card.appendChild(img);
 
         // Имя
         const name = document.createElement('div');
         name.className = 'friend-name';
         name.textContent = f.name;
+        name.addEventListener('click', function() {
+            showToast(`✨ ${f.name} желает тебе счастья!`);
+        });
         card.appendChild(name);
 
-        // Подпись "Поздравление от ..."
+        // Подпись
         const sub = document.createElement('div');
         sub.className = 'friend-greeting';
         sub.textContent = `💌 Поздравление от ${f.name}`;
         card.appendChild(sub);
 
-        // Сообщение (дополнительно)
+        // Сообщение
         const msg = document.createElement('div');
         msg.className = 'friend-message';
         msg.textContent = f.message;
-        msg.style.cssText = 'font-size:1rem; color:#5a4a4a; margin:0.2rem 0 0.5rem;';
+        msg.addEventListener('click', function() {
+            showToast(`📝 "${f.message}"`);
+        });
         card.appendChild(msg);
 
-        // Блок для медиа (видео и аудио)
+        // Медиа-блок
         const mediaBlock = document.createElement('div');
         mediaBlock.className = 'media-block';
         mediaBlock.dataset.index = index;
 
-        // Видео
         if (f.video) {
             const video = document.createElement('video');
             video.src = f.video;
@@ -113,7 +114,6 @@
             mediaBlock.appendChild(video);
         }
 
-        // Аудио
         if (f.audio) {
             const audio = document.createElement('audio');
             audio.src = f.audio;
@@ -135,7 +135,7 @@
         sliderDots.appendChild(dot);
     });
 
-    // ----- 5. Функции управления слайдером -----
+    // ----- 5. Функции управления -----
     function goToSlide(index, animate = true) {
         if (index < 0 || index >= totalSlides) return;
         currentIndex = index;
@@ -143,62 +143,45 @@
         sliderTrack.style.transition = animate ? 'transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
         sliderTrack.style.transform = `translateX(${offset}%)`;
 
-        // Обновляем активный класс
         document.querySelectorAll('.slide').forEach((s, i) => {
             s.classList.toggle('active', i === index);
         });
-
-        // Обновляем точки
         document.querySelectorAll('.dot').forEach((d, i) => {
             d.classList.toggle('active', i === index);
         });
-
-        // Счётчик
         slideCounter.textContent = `${index + 1} / ${totalSlides}`;
-
-        // Кнопки
         prevBtn.disabled = (index === 0);
         nextBtn.disabled = (index === totalSlides - 1);
 
-        // Сброс медиа на новом слайде (будет запущено автоматически)
         resetMediaOnSlide(index);
     }
 
-    // Сброс и подготовка медиа на слайде
     function resetMediaOnSlide(index) {
-        // Останавливаем всё, что играло
         if (currentVideo) { currentVideo.pause(); currentVideo.currentTime = 0; }
         if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
         clearTimeout(mediaTimeout);
 
-        // Находим слайд
         const slides = document.querySelectorAll('.slide');
         const slide = slides[index];
         const mediaBlock = slide.querySelector('.media-block');
         const video = mediaBlock ? mediaBlock.querySelector('video') : null;
         const audio = mediaBlock ? mediaBlock.querySelector('audio') : null;
 
-        // Скрываем медиа-блок
         if (mediaBlock) mediaBlock.classList.remove('visible');
 
-        // Сохраняем ссылки
         currentVideo = video;
         currentAudio = audio;
 
-        // Запускаем процесс: сначала показываем фото и надпись, через 1.5 сек показываем видео
         mediaTimeout = setTimeout(() => {
             if (mediaBlock) mediaBlock.classList.add('visible');
-            // Запускаем видео через небольшую задержку для плавности
             setTimeout(() => {
                 if (video) {
                     video.muted = false;
                     video.play().catch(e => console.warn('Видео не запустилось:', e));
-                    // По окончании видео -> аудио
                     video.onended = function() {
                         if (audio) {
                             audio.play().catch(e => console.warn('Аудио не запустилось:', e));
                             audio.onended = function() {
-                                // Аудио окончено -> переход на следующий слайд
                                 if (currentIndex < totalSlides - 1) {
                                     goToSlide(currentIndex + 1);
                                 } else {
@@ -206,7 +189,6 @@
                                 }
                             };
                         } else {
-                            // если аудио нет, переходим сразу
                             if (currentIndex < totalSlides - 1) {
                                 goToSlide(currentIndex + 1);
                             } else {
@@ -215,7 +197,6 @@
                         }
                     };
                 } else if (audio) {
-                    // если видео нет, сразу аудио
                     audio.play().catch(e => console.warn('Аудио не запустилось:', e));
                     audio.onended = function() {
                         if (currentIndex < totalSlides - 1) {
@@ -225,7 +206,6 @@
                         }
                     };
                 } else {
-                    // нет медиа – через 2 секунды переходим
                     setTimeout(() => {
                         if (currentIndex < totalSlides - 1) {
                             goToSlide(currentIndex + 1);
@@ -235,69 +215,55 @@
                     }, 2000);
                 }
             }, 300);
-        }, 1200); // пауза перед появлением видео
+        }, 1200);
     }
 
-    // Завершение сюрприза
     function finishSurprise() {
         document.body.style.overflow = '';
         playBtn.textContent = '🎉 Все поздравления просмотрены!';
         playBtn.style.background = '#8b6b4a';
         playBtn.disabled = true;
         sliderNav.style.display = 'none';
-        // Показываем финальный слайд
         const finalSlide = document.createElement('div');
         finalSlide.className = 'slide';
         finalSlide.innerHTML = `
-            <div class="friend-card" style="background: #fff5e6; border-color: #d4af37;">
-                <div class="friend-name" style="font-size: 2.4rem;">💖 Спасибо всем! 💖</div>
-                <div class="friend-greeting" style="font-size: 1.5rem;">Ты — самая любимая!</div>
-                <div style="margin-top: 1rem; font-size: 1.2rem; color: #a67c4e;">С днём рождения!</div>
+            <div class="friend-card" style="background: #fff5e6; border-color: var(--gold);">
+                <div class="friend-name" style="font-size: 2.6rem;">💖 Спасибо всем! 💖</div>
+                <div class="friend-greeting" style="font-size: 1.6rem;">Ты — самая любимая!</div>
+                <div style="margin: 1rem 0; font-size: 2rem; font-family: 'Dancing Script', cursive; color: var(--gold-dark);">#КоролеваВладислава 👑</div>
+                <div style="font-size: 1.2rem; color: #a67c4e;">С днём рождения!</div>
             </div>
         `;
         sliderTrack.appendChild(finalSlide);
-        goToSlide(totalSlides); // переходим на последний добавленный
+        goToSlide(totalSlides);
         document.querySelector('.slider-controls').style.display = 'none';
         document.querySelector('.slider-dots').style.display = 'none';
     }
 
-    // ----- 6. Запуск сюрприза по кнопке -----
+    // ----- 6. Запуск -----
     playBtn.addEventListener('click', function() {
         if (isPlaying) return;
         isPlaying = true;
-
-        // Блокируем скролл
         document.body.style.overflow = 'hidden';
-
-        // Скрываем кнопку
         playBtn.style.display = 'none';
-
-        // Показываем навигацию
         sliderNav.style.display = 'flex';
-
-        // Переходим к первому слайду (без анимации)
         goToSlide(0, false);
-
-        // Запускаем медиа для первого слайда
         resetMediaOnSlide(0);
     });
 
-    // ----- 7. Ручное управление -----
+    // ----- 7. Кнопки -----
     prevBtn.addEventListener('click', function() {
         if (currentIndex > 0) {
-            // Останавливаем текущие медиа
             if (currentVideo) { currentVideo.pause(); currentVideo.currentTime = 0; }
             if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
             clearTimeout(mediaTimeout);
             goToSlide(currentIndex - 1);
-            // Запускаем медиа на новом слайде
             resetMediaOnSlide(currentIndex);
         }
     });
 
     nextBtn.addEventListener('click', function() {
         if (currentIndex < totalSlides - 1) {
-            // Останавливаем текущие медиа
             if (currentVideo) { currentVideo.pause(); currentVideo.currentTime = 0; }
             if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
             clearTimeout(mediaTimeout);
@@ -307,7 +273,6 @@
     });
 
     skipBtn.addEventListener('click', function() {
-        // Пропустить текущее поздравление и перейти к следующему
         if (currentIndex < totalSlides - 1) {
             if (currentVideo) { currentVideo.pause(); currentVideo.currentTime = 0; }
             if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
@@ -319,9 +284,34 @@
         }
     });
 
-    // Инициализация: первый слайд без автозапуска
+    // ----- 8. Интерактив -----
+    document.getElementById('childhoodPhoto').addEventListener('click', function() {
+        showToast('🌼 Эта маленькая девочка выросла в прекрасную королеву!');
+    });
+    document.querySelectorAll('.memory-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const person = this.dataset.person || 'близкий человек';
+            showToast(`💞 Воспоминания с ${person} — самые тёплые!`);
+        });
+    });
+
+    // ----- 9. Тосты -----
+    function showToast(text) {
+        let toast = document.querySelector('.toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.className = 'toast';
+            document.body.appendChild(toast);
+        }
+        toast.textContent = text;
+        toast.classList.add('show');
+        clearTimeout(toast._hideTimer);
+        toast._hideTimer = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 2500);
+    }
+
     goToSlide(0, false);
     sliderNav.style.display = 'none';
-
-    console.log('Сайт готов! С Днём Рождения!');
+    console.log('Сайт готов! С Днём Рождения, Владислава! 👑');
 })();
