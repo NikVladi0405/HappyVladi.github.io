@@ -848,7 +848,6 @@ h2 {
     margin: 1.5rem 0 2rem;
 }
 
-/* ----- МАГИЧЕСКАЯ КНОПКА С ПУЛЬСАЦИЕЙ ----- */
 .pulse-btn {
     position: relative;
     background: linear-gradient(145deg, var(--gold), var(--gold-dark), var(--gold));
@@ -930,7 +929,7 @@ h2 {
     margin: 2rem auto 0;
     overflow: hidden;
     border-radius: var(--radius);
-    background: rgba(255, 248, 240, 0.3);
+    background: rgba(255, 248, 240, 0.15);
     backdrop-filter: blur(16px);
     padding: 1.5rem 0 0.8rem;
     box-shadow: 0 25px 80px rgba(0, 0, 0, 0.04);
@@ -938,7 +937,6 @@ h2 {
     border: 1px solid rgba(232, 184, 75, 0.1);
 }
 
-/* Декоративные линии */
 .slider-lines {
     position: absolute;
     top: 0;
@@ -996,7 +994,6 @@ h2 {
     justify-content: center;
 }
 
-/* ----- КАРТОЧКА ПОЗДРАВЛЯЮЩЕГО (ВЫРАВНИВАНИЕ ПО ЦЕНТРУ) ----- */
 .friend-card {
     background: rgba(255, 248, 240, 0.75);
     backdrop-filter: blur(12px);
@@ -1017,6 +1014,7 @@ h2 {
     transition: all 0.3s;
     position: relative;
     overflow: hidden;
+    z-index: 1;
 }
 
 .friend-card::before {
@@ -1108,9 +1106,9 @@ h2 {
     color: var(--gold-dark);
 }
 
-/* ----- МЕДИА-БЛОК (ВИДЕО РАСТЯГИВАЕТСЯ ПОД СВОЙ РАЗМЕР) ----- */
+/* ----- МЕДИА-БЛОК ----- */
 .media-block {
-    margin-top: 0.5rem;
+    margin-top: 0.3rem;
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.7s ease, transform 0.7s ease;
@@ -1119,7 +1117,7 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.3rem;
+    gap: 0.2rem;
 }
 
 .media-block.visible {
@@ -1138,6 +1136,7 @@ h2 {
     border: none;
     outline: none;
     height: auto;
+    max-height: 200px;
 }
 
 .media-block video {
@@ -1145,23 +1144,42 @@ h2 {
     object-fit: contain;
 }
 
-.media-block audio {
-    background: rgba(255, 248, 240, 0.3);
-    border-radius: 30px;
-    padding: 0.2rem 0.5rem;
+/* ============================================================
+   АУДИО-ПЛЕЕР С ПОДПИСЬЮ
+   ============================================================ */
+.audio-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    color: var(--gold-dark);
+    font-weight: 600;
+    margin-top: 0.5rem;
+    margin-bottom: 0.1rem;
+    letter-spacing: 1px;
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
 }
 
-/* Убираем чёрный фон у видео (Chrome, Safari) */
-.media-block video::-webkit-media-controls-panel {
+.friend-audio {
+    width: 100%;
+    border-radius: 30px;
+    background: rgba(255, 248, 240, 0.3);
+    padding: 0.2rem 0.5rem;
+    margin-top: 0.1rem;
+    border: 1px solid rgba(232, 184, 75, 0.15);
+}
+
+.friend-audio::-webkit-media-controls-panel {
     background: rgba(255, 248, 240, 0.1);
 }
 
-.media-block video::-webkit-media-controls-enclosure {
-    border-radius: 16px;
+.friend-audio::-webkit-media-controls-enclosure {
+    border-radius: 30px;
 }
 
-/* Убираем чёрный фон у видео (Firefox) */
-.media-block video::-moz-media-controls-panel {
+.friend-audio::-moz-media-controls-panel {
     background: rgba(255, 248, 240, 0.1);
 }
 
@@ -1357,7 +1375,7 @@ h2 {
 }
 
 /* ============================================================
-   ТОСТЫ, КОНФЕТТИ, ЗВЁЗДЫ
+   ТОСТЫ, КОНФЕТТИ, ЗВЁЗДЫ, САЛЮТЫ
    ============================================================ */
 .toast {
     position: fixed;
@@ -1418,9 +1436,6 @@ h2 {
     100% { opacity: 0; transform: translateY(350px) rotate(400deg) scale(0.2); }
 }
 
-/* ============================================================
-   САЛЮТЫ И ФЕЙЕРВЕРКИ
-   ============================================================ */
 #fireworks-container {
     position: fixed;
     top: 0;
@@ -1469,13 +1484,12 @@ h2 {
    АДАПТИВНОСТЬ (ДЛЯ ТЕЛЕФОНОВ)
    ============================================================ */
 @media (max-width: 768px) {
-    /* Общие */
     section {
         padding: 2rem 0.8rem;
     }
 
     h2 {
-        font-size: 2.2rem;
+        font-size: 2.6rem;
     }
 
     .section-subtitle {
@@ -1488,17 +1502,15 @@ h2 {
     }
 
     .text-frame h1 {
-        font-size: 2.2rem;
+        font-size: 2.6rem;
     }
 
     .text-frame p {
-        font-size: 0.95rem;
-        line-height: 1.6;
+        font-size: 1rem;
     }
 
     .photo-frame {
-        max-width: 240px;
-        padding: 10px;
+        max-width: 280px;
     }
 
     .photo-frame .click-hint {
@@ -1514,35 +1526,30 @@ h2 {
     }
 
     .vinyl-record {
-        width: 120px;
-        height: 120px;
+        width: 150px;
+        height: 150px;
     }
 
     .vinyl-center {
-        width: 28px;
-        height: 28px;
+        width: 30px;
+        height: 30px;
     }
 
     .vinyl-center::after {
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
     }
 
     .song-title {
-        font-size: 1.5rem;
-    }
-
-    .song-lyrics {
-        min-height: 80px;
-        padding: 0.8rem;
+        font-size: 1.8rem;
     }
 
     .lyrics-line {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
 
     .lyrics-line.highlight-line {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
     }
 
     .magic-btn {
@@ -1571,25 +1578,20 @@ h2 {
     }
 
     .wishes-grid {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
         gap: 1rem;
         padding: 0 0.5rem;
     }
 
     .wish-star {
-        min-height: 70px;
+        min-height: 80px;
         padding: 1rem 0.5rem;
     }
 
     .wish-star .star-icon {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
 
-    .wish-star .wish-text {
-        font-size: 0.9rem;
-    }
-
-    /* ===== СЮРПРИЗ (АДАПТИВ) ===== */
     #surprise {
         padding: 2rem 0.8rem;
     }
@@ -1620,7 +1622,6 @@ h2 {
 
     .friend-name {
         font-size: 1.8rem;
-        margin: 0.2rem 0 0.05rem;
     }
 
     .friend-greeting {
@@ -1634,12 +1635,12 @@ h2 {
 
     .media-block video,
     .media-block audio {
+        max-height: 150px;
         border-radius: 12px;
     }
 
     .slider-dots {
         gap: 8px;
-        margin: 0.4rem 0 0.2rem;
     }
 
     .dot {
@@ -1660,7 +1661,6 @@ h2 {
     }
 
     .slider-nav {
-        gap: 0.4rem;
         width: 100%;
         justify-content: center;
     }
@@ -1668,11 +1668,6 @@ h2 {
     .nav-btn {
         font-size: 0.8rem;
         padding: 0.4rem 0.8rem;
-        border-radius: 40px;
-    }
-
-    .nav-btn .nav-icon {
-        font-size: 0.8rem;
     }
 
     .nav-btn .nav-label {
@@ -1686,7 +1681,6 @@ h2 {
     .pulse-btn {
         font-size: 1.2rem;
         padding: 0.8rem 2.5rem;
-        border-radius: 60px;
     }
 
     #finale {
@@ -1695,12 +1689,12 @@ h2 {
     }
 
     #finale h2 {
-        font-size: 2.2rem;
+        font-size: 2.6rem;
         margin: 0.5rem 0;
     }
 
     .hearts-container {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
         letter-spacing: 12px;
     }
 
@@ -1721,9 +1715,12 @@ h2 {
     .slider-lines .line {
         display: none;
     }
+
+    .audio-label {
+        font-size: 0.75rem;
+    }
 }
 
-/* Для очень маленьких экранов */
 @media (max-width: 420px) {
     .friend-photo {
         width: 75px;
@@ -1743,9 +1740,9 @@ h2 {
         min-height: 350px;
     }
 
-    .nav-btn {
-        font-size: 0.7rem;
-        padding: 0.3rem 0.6rem;
+    .media-block video,
+    .media-block audio {
+        max-height: 120px;
     }
 
     .nav-btn .nav-label {

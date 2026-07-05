@@ -31,7 +31,7 @@
         ballsContainer.appendChild(ball);
     }
 
-    // ----- 2. Данные друзей -----
+    // ----- 2. Данные друзей (с аудио и видео) -----
     const friends = [
         { name: 'Мама', message: 'С днём рождения, Дочка! Ты — лучшая!', photo: 'img/friends/mama.jpg', video: 'video/friend1.mp4' },
         { name: 'Никита', message: 'Пусть мечты сбываются! Я тебя люблю!', photo: 'img/nikita.jpg', video: 'video/friend2.mp4', audio: 'audio/Nikita.ogg' },
@@ -60,10 +60,7 @@
     let currentVideo = null;
     let currentAudio = null;
 
-    // Флаг для запуска салюта при переключении
-    let fireworksInterval = null;
-
-    // ----- 4. Создание слайдов (обновлённые карточки) -----
+    // ----- 4. Создание слайдов (с подписью для аудио) -----
     friends.forEach((f, index) => {
         const slide = document.createElement('div');
         slide.className = 'slide';
@@ -72,6 +69,7 @@
         const card = document.createElement('div');
         card.className = 'friend-card';
 
+        // Фото
         const img = document.createElement('img');
         img.className = 'friend-photo';
         img.src = f.photo || 'img/default-avatar.jpg';
@@ -91,6 +89,7 @@
         });
         card.appendChild(img);
 
+        // Имя
         const name = document.createElement('div');
         name.className = 'friend-name';
         name.textContent = f.name;
@@ -100,11 +99,13 @@
         });
         card.appendChild(name);
 
+        // Подпись
         const sub = document.createElement('div');
         sub.className = 'friend-greeting';
         sub.textContent = `💌 Поздравление от ${f.name}`;
         card.appendChild(sub);
 
+        // Сообщение
         const msg = document.createElement('div');
         msg.className = 'friend-message';
         msg.textContent = f.message;
@@ -114,10 +115,12 @@
         });
         card.appendChild(msg);
 
+        // Медиа-блок
         const mediaBlock = document.createElement('div');
         mediaBlock.className = 'media-block';
         mediaBlock.dataset.index = index;
 
+        // Видео
         if (f.video) {
             const video = document.createElement('video');
             video.src = f.video;
@@ -130,12 +133,20 @@
             mediaBlock.appendChild(video);
         }
 
+        // Аудио с подписью
         if (f.audio) {
             const audio = document.createElement('audio');
             audio.src = f.audio;
             audio.controls = true;
             audio.preload = 'auto';
             audio.dataset.index = index;
+            audio.className = 'friend-audio';
+            
+            // Подпись для аудио
+            const audioLabel = document.createElement('div');
+            audioLabel.className = 'audio-label';
+            audioLabel.textContent = '🎵 Аудио-поздравление';
+            mediaBlock.appendChild(audioLabel);
             mediaBlock.appendChild(audio);
         }
 
@@ -143,6 +154,7 @@
         slide.appendChild(card);
         sliderTrack.appendChild(slide);
 
+        // Точка
         const dot = document.createElement('button');
         dot.className = 'dot' + (index === 0 ? ' active' : '');
         dot.dataset.index = index;
@@ -168,109 +180,10 @@
         prevBtn.disabled = (index === 0);
         nextBtn.disabled = (index === totalSlides - 1);
 
-        // Запускаем салют при переключении на новый слайд
-        startFireworksSequence();
-
         resetMediaOnSlide(index);
     }
 
-    // ----- 6. САЛЮТЫ И ФЕЙЕРВЕРКИ С ИНТЕРВАЛОМ -----
-    function startFireworksSequence() {
-        // Очищаем предыдущий интервал
-        if (fireworksInterval) {
-            clearInterval(fireworksInterval);
-            fireworksInterval = null;
-        }
-
-        // Запускаем серию салютов с интервалом 1 секунда (3-4 залпа)
-        let count = 0;
-        const maxCount = 3 + Math.floor(Math.random() * 2); // 3-4 залпа
-
-        // Первый салют сразу
-        launchFirework(
-            Math.random() * window.innerWidth * 0.6 + window.innerWidth * 0.2,
-            Math.random() * window.innerHeight * 0.4 + 100
-        );
-
-        // Последующие с интервалом
-        fireworksInterval = setInterval(() => {
-            count++;
-            launchFirework(
-                Math.random() * window.innerWidth * 0.6 + window.innerWidth * 0.2,
-                Math.random() * window.innerHeight * 0.4 + 80
-            );
-            // Дополнительный малый салют
-            setTimeout(() => {
-                launchFirework(
-                    Math.random() * window.innerWidth * 0.4 + window.innerWidth * 0.3,
-                    Math.random() * window.innerHeight * 0.3 + 120
-                );
-            }, 300);
-
-            if (count >= maxCount) {
-                clearInterval(fireworksInterval);
-                fireworksInterval = null;
-            }
-        }, 900);
-    }
-
-    // ----- 7. Запуск салюта -----
-    function launchFirework(x, y) {
-        const container = document.getElementById('fireworks-container');
-        if (!container) return;
-
-        const cx = x || Math.random() * window.innerWidth;
-        const cy = y || Math.random() * window.innerHeight * 0.5 + 80;
-        const colors = ['#E8B84B', '#F5D06A', '#FF6B6B', '#FFB8B8', '#FFD93D', '#6BCB77', '#4D96FF', '#FF8A8A', '#FFD700', '#FF69B4'];
-
-        const particleCount = 30 + Math.floor(Math.random() * 30);
-        for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'firework-particle';
-            const size = Math.random() * 6 + 3;
-            const angle = Math.random() * Math.PI * 2;
-            const distance = 40 + Math.random() * 140;
-            const tx = Math.cos(angle) * distance;
-            const ty = Math.sin(angle) * distance - 30;
-
-            particle.style.width = size + 'px';
-            particle.style.height = size + 'px';
-            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-            particle.style.left = cx + 'px';
-            particle.style.top = cy + 'px';
-            particle.style.setProperty('--tx', tx + 'px');
-            particle.style.setProperty('--ty', ty + 'px');
-            particle.style.boxShadow = `0 0 ${size * 2}px ${particle.style.background}`;
-            particle.style.animationDuration = (0.8 + Math.random() * 0.8) + 's';
-            particle.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-
-            container.appendChild(particle);
-            setTimeout(() => particle.remove(), 2000);
-        }
-
-        // Искры
-        for (let i = 0; i < 12; i++) {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'firework-sparkle';
-            const size = Math.random() * 4 + 2;
-            const angle = Math.random() * Math.PI * 2;
-            const distance = 15 + Math.random() * 70;
-
-            sparkle.style.width = size + 'px';
-            sparkle.style.height = size + 'px';
-            sparkle.style.background = '#FFE88A';
-            sparkle.style.left = (cx + Math.cos(angle) * distance) + 'px';
-            sparkle.style.top = (cy + Math.sin(angle) * distance) + 'px';
-            sparkle.style.borderRadius = '50%';
-            sparkle.style.boxShadow = '0 0 10px #FFE88A';
-            sparkle.style.animationDuration = (1 + Math.random() * 0.8) + 's';
-
-            container.appendChild(sparkle);
-            setTimeout(() => sparkle.remove(), 2000);
-        }
-    }
-
-    // ----- 8. Сброс медиа -----
+    // ----- 6. Сброс медиа -----
     function resetMediaOnSlide(index) {
         if (currentVideo) { currentVideo.pause(); currentVideo.currentTime = 0; }
         if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
@@ -333,23 +246,17 @@
         }, 1200);
     }
 
-    // ----- 9. Завершение сюрприза -----
+    // ----- 7. Завершение сюрприза -----
     function finishSurprise() {
         document.body.style.overflow = '';
         playBtn.textContent = '🎉 Все поздравления просмотрены!';
-        playBtn.style.background = '#B8A898';
+        playBtn.style.background = '#8b6b4a';
         playBtn.disabled = true;
         sliderNav.style.display = 'flex';
-
-        if (fireworksInterval) {
-            clearInterval(fireworksInterval);
-            fireworksInterval = null;
-        }
-
         const finalSlide = document.createElement('div');
         finalSlide.className = 'slide';
         finalSlide.innerHTML = `
-            <div class="friend-card" style="background: #FFF8F0; border-color: var(--gold);">
+            <div class="friend-card" style="background: #fff5e6; border-color: var(--gold);">
                 <div class="friend-name" style="font-size: 2.8rem;">💖 Спасибо всем! 💖</div>
                 <div class="friend-greeting" style="font-size: 1.6rem;">Ты — самая любимая!</div>
                 <div style="margin: 1rem 0; font-size: 2.2rem; font-family: 'Great Vibes', cursive; color: var(--gold-dark);">#КоролеваВладислава 👑</div>
@@ -360,7 +267,6 @@
         goToSlide(totalSlides);
         document.querySelector('.slider-controls').style.display = 'flex';
         document.querySelector('.slider-dots').style.display = 'flex';
-        // Финальный салют
         for (let i = 0; i < 6; i++) {
             setTimeout(() => launchFirework(
                 Math.random() * window.innerWidth,
@@ -369,7 +275,7 @@
         }
     }
 
-    // ----- 10. Запуск -----
+    // ----- 8. Запуск -----
     playBtn.addEventListener('click', function() {
         if (isPlaying) return;
         isPlaying = true;
@@ -378,7 +284,6 @@
         sliderNav.style.display = 'flex';
         goToSlide(0, false);
         resetMediaOnSlide(0);
-        // Салют при запуске
         for (let i = 0; i < 4; i++) {
             setTimeout(() => launchFirework(
                 Math.random() * window.innerWidth,
@@ -387,7 +292,7 @@
         }
     });
 
-    // ----- 11. Кнопки навигации (всегда видны) -----
+    // ----- 9. Кнопки навигации -----
     prevBtn.addEventListener('click', function() {
         if (currentIndex > 0) {
             if (currentVideo) { currentVideo.pause(); currentVideo.currentTime = 0; }
@@ -420,7 +325,7 @@
         }
     });
 
-    // ----- 12. Переключение фото -----
+    // ----- 10. Переключение фото -----
     const childhoodPhoto = document.getElementById('childhoodPhoto');
     const img = childhoodPhoto.querySelector('img');
     let isAdult = false;
@@ -454,7 +359,7 @@
         }
     });
 
-    // ----- 13. Конфетти -----
+    // ----- 11. Конфетти -----
     function launchConfetti(count) {
         const colors = ['#E8B84B', '#F5D06A', '#FF6B6B', '#FFB8B8', '#FFD93D', '#6BCB77', '#4D96FF'];
         for (let i = 0; i < count; i++) {
@@ -475,7 +380,62 @@
         }
     }
 
-    // ----- 14. Интерактивные слова -----
+    // ----- 12. Салюты -----
+    function launchFirework(x, y) {
+        const container = document.getElementById('fireworks-container');
+        if (!container) return;
+
+        const cx = x || Math.random() * window.innerWidth;
+        const cy = y || Math.random() * window.innerHeight * 0.5 + 80;
+        const colors = ['#E8B84B', '#F5D06A', '#FF6B6B', '#FFB8B8', '#FFD93D', '#6BCB77', '#4D96FF', '#FF8A8A', '#FFD700', '#FF69B4'];
+
+        const particleCount = 30 + Math.floor(Math.random() * 30);
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'firework-particle';
+            const size = Math.random() * 6 + 3;
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 40 + Math.random() * 140;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance - 30;
+
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.left = cx + 'px';
+            particle.style.top = cy + 'px';
+            particle.style.setProperty('--tx', tx + 'px');
+            particle.style.setProperty('--ty', ty + 'px');
+            particle.style.boxShadow = `0 0 ${size * 2}px ${particle.style.background}`;
+            particle.style.animationDuration = (0.8 + Math.random() * 0.8) + 's';
+            particle.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+
+            container.appendChild(particle);
+            setTimeout(() => particle.remove(), 2000);
+        }
+
+        for (let i = 0; i < 12; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'firework-sparkle';
+            const size = Math.random() * 4 + 2;
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 15 + Math.random() * 70;
+
+            sparkle.style.width = size + 'px';
+            sparkle.style.height = size + 'px';
+            sparkle.style.background = '#FFE88A';
+            sparkle.style.left = (cx + Math.cos(angle) * distance) + 'px';
+            sparkle.style.top = (cy + Math.sin(angle) * distance) + 'px';
+            sparkle.style.borderRadius = '50%';
+            sparkle.style.boxShadow = '0 0 10px #FFE88A';
+            sparkle.style.animationDuration = (1 + Math.random() * 0.8) + 's';
+
+            container.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 2000);
+        }
+    }
+
+    // ----- 13. Интерактивные слова -----
     document.querySelectorAll('.interactive-word').forEach(word => {
         word.addEventListener('click', function(e) {
             const toast = this.dataset.toast || '✨ Магия!';
@@ -494,7 +454,7 @@
         });
     });
 
-    // ----- 15. Моя песня -----
+    // ----- 14. Моя песня -----
     const playMySongBtn = document.getElementById('playMySong');
     const myAudio = document.getElementById('myAudio');
     const vinylRecord = document.getElementById('vinylRecord');
@@ -539,7 +499,7 @@
         });
     }
 
-    // ----- 16. Свиток предсказаний -----
+    // ----- 15. Свиток предсказаний -----
     const predictions = [
         { text: 'В этом году тебя ждёт невероятное путешествие, полное радости и открытий!', from: 'Судьба' },
         { text: 'Твоя улыбка озарит мир ярче солнца, и все мечты сбудутся.', from: 'Звёзды' },
@@ -591,7 +551,7 @@
         });
     }
 
-    // ----- 17. ГАЛЕРЕЯ ПОЖЕЛАНИЙ -----
+    // ----- 16. ГАЛЕРЕЯ ПОЖЕЛАНИЙ -----
     const wishes = [
         { text: 'Будь счастлива каждый день, как этот!', from: 'Мама' },
         { text: 'Пусть все твои мечты сбываются!', from: 'Никита' },
@@ -641,7 +601,7 @@
         wishesGrid.appendChild(star);
     });
 
-    // ----- 18. Тосты -----
+    // ----- 17. Тосты -----
     function showToast(text) {
         let toast = document.querySelector('.toast');
         if (!toast) {
@@ -657,7 +617,7 @@
         }, 3000);
     }
 
-    // ----- 19. МАГИЧЕСКАЯ МУЗЫКА ДЛЯ СВИТКА -----
+    // ----- 18. МАГИЧЕСКАЯ МУЗЫКА ДЛЯ СВИТКА -----
     const predictionsSection = document.getElementById('predictions');
     const magicAudio = document.getElementById('magicAudio');
     let isMagicMusicPlaying = false;
@@ -709,7 +669,7 @@
         }, { once: true });
     }
 
-    // ----- 20. Автоматический фейерверк -----
+    // ----- 19. Автоматический фейерверк -----
     setInterval(() => {
         if (Math.random() > 0.6) {
             launchFirework(
