@@ -996,7 +996,7 @@ h2 {
     justify-content: center;
 }
 
-/* ----- КАРТОЧКА ПОЗДРАВЛЯЮЩЕГО (ОДИНАКОВЫЙ РАЗМЕР) ----- */
+/* ----- КАРТОЧКА ПОЗДРАВЛЯЮЩЕГО (ВЫРАВНИВАНИЕ ПО ЦЕНТРУ) ----- */
 .friend-card {
     background: rgba(255, 248, 240, 0.75);
     backdrop-filter: blur(12px);
@@ -1006,14 +1006,14 @@ h2 {
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.04);
     width: 100%;
     max-width: 520px;
-    min-height: 420px;
+    min-height: 380px;
     height: auto;
     margin: 0 auto;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     transition: all 0.3s;
     position: relative;
     overflow: hidden;
@@ -1108,7 +1108,7 @@ h2 {
     color: var(--gold-dark);
 }
 
-/* ----- МЕДИА-БЛОК (ВИДЕО/АУДИО БЕЗ ЧЁРНЫХ РАМОК) ----- */
+/* ----- МЕДИА-БЛОК (ВИДЕО РАСТЯГИВАЕТСЯ ПОД СВОЙ РАЗМЕР) ----- */
 .media-block {
     margin-top: 0.5rem;
     opacity: 0;
@@ -1134,15 +1134,15 @@ h2 {
     background: transparent;
     margin-top: 0;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
-    max-height: 220px;
     display: block;
     border: none;
     outline: none;
+    height: auto;
 }
 
 .media-block video {
     background: transparent;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .media-block audio {
@@ -1606,7 +1606,7 @@ h2 {
 
     .friend-card {
         padding: 1.5rem 1rem;
-        min-height: 360px;
+        min-height: 320px;
         max-width: 100%;
         border-radius: 20px;
     }
@@ -1634,7 +1634,6 @@ h2 {
 
     .media-block video,
     .media-block audio {
-        max-height: 150px;
         border-radius: 12px;
     }
 
@@ -1736,17 +1735,12 @@ h2 {
     }
 
     .friend-card {
-        min-height: 320px;
+        min-height: 280px;
         padding: 1rem 0.8rem;
     }
 
     .slider-wrapper {
         min-height: 350px;
-    }
-
-    .media-block video,
-    .media-block audio {
-        max-height: 120px;
     }
 
     .nav-btn {
