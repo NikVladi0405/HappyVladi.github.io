@@ -172,7 +172,6 @@
         prevBtn.disabled = (index === 0);
         nextBtn.disabled = (index === totalSlides - 1);
 
-        // Запускаем салют при переключении
         if (animate) {
             setTimeout(() => {
                 launchFirework(
@@ -217,7 +216,6 @@
                 if (video) {
                     video.muted = false;
                     
-                    // Функция для перехода после завершения
                     const onMediaEnd = function() {
                         if (autoTransitionEnabled && currentIndex < totalSlides - 1) {
                             goToSlide(currentIndex + 1);
@@ -702,6 +700,134 @@
             );
         }
     }, 10000);
+
+    // ----- 20. СКАЧИВАНИЕ ВСЕХ ФАЙЛОВ -----
+    const downloadBtn = document.getElementById('downloadAllBtn');
+    const fileCountSpan = document.getElementById('fileCount');
+    const downloadProgress = document.getElementById('downloadProgress');
+    const downloadProgressBar = document.getElementById('downloadProgressBar');
+    const downloadProgressText = document.getElementById('downloadProgressText');
+
+    function getAllFiles() {
+        const files = [];
+        friends.forEach((f, index) => {
+            if (f.video) {
+                files.push({
+                    name: `video_${index + 1}_${f.name}.mp4`,
+                    url: f.video,
+                    type: 'video'
+                });
+            }
+            if (f.audio) {
+                files.push({
+                    name: `audio_${index + 1}_${f.name}.ogg`,
+                    url: f.audio,
+                    type: 'audio'
+                });
+            }
+        });
+        return files;
+    }
+
+    const allFiles = getAllFiles();
+    if (fileCountSpan) {
+        fileCountSpan.textContent = allFiles.length;
+    }
+
+    function downloadFile(url, filename) {
+        return new Promise((resolve, reject) => {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) throw new Error('Ошибка загрузки файла');
+                    return response.blob();
+                })
+                .then(blob => {
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = filename;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(link.href);
+                    resolve();
+                })
+                .catch(error => {
+                    console.error('Ошибка скачивания:', error);
+                    reject(error);
+                });
+        });
+    }
+
+    async function downloadAllFiles() {
+        if (!downloadBtn) return;
+        
+        const files = getAllFiles();
+        if (files.length === 0) {
+            showToast('❌ Нет файлов для скачивания');
+            return;
+        }
+
+        downloadBtn.disabled = true;
+        downloadBtn.textContent = '⏳ Загрузка...';
+        downloadProgress.style.display = 'block';
+        
+        let downloaded = 0;
+        const total = files.length;
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            try {
+                await downloadFile(file.url, file.name);
+                downloaded++;
+                const percent = Math.round((downloaded / total) * 100);
+                downloadProgressBar.style.width = percent + '%';
+                downloadProgressText.textContent = percent + '%';
+                showToast(`📥 Скачано ${downloaded} из ${total}: ${file.name}`);
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showToast(`❌ Ошибка при скачивании ${file.name}`);
+            }
+        }
+
+        downloadBtn.disabled = false;
+        downloadBtn.innerHTML = `
+            <span class="btn-text">✅ Все файлы скачаны!</span>
+            <span class="btn-glow"></span>
+            <span class="btn-sparkles">✨</span>
+        `;
+        
+        setTimeout(() => {
+            downloadBtn.innerHTML = `
+                <span class="btn-text">📥 Скачать все файлы</span>
+                <span class="btn-glow"></span>
+                <span class="btn-sparkles">✨</span>
+            `;
+            downloadProgress.style.display = 'none';
+            downloadProgressBar.style.width = '0%';
+            downloadProgressText.textContent = '0%';
+        }, 5000);
+        
+        showToast(`🎉 Все ${total} файлов успешно скачаны!`);
+        launchConfetti(30);
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => launchFirework(
+                Math.random() * window.innerWidth,
+                Math.random() * window.innerHeight * 0.4 + 100
+            ), i * 400);
+        }
+    }
+
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', downloadAllFiles);
+    }
+
+    function updateFileCount() {
+        const files = getAllFiles();
+        if (fileCountSpan) {
+            fileCountSpan.textContent = files.length;
+        }
+    }
+    updateFileCount();
 
     // ----- Инициализация -----
     goToSlide(0, false);

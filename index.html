@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>С Днём Рождения, любимая!</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Dancing+Script:wght@400;500;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Tangerine:wght@400;700&display=swap" rel="stylesheet" />
@@ -121,7 +121,7 @@
         </div>
     </section>
 
-    <!-- ===== СЕКЦИЯ 5: СЮРПРИЗ ОТ БЛИЗКИХ (УЛУЧШЕННЫЙ) ===== -->
+    <!-- ===== СЕКЦИЯ 5: СЮРПРИЗ ОТ БЛИЗКИХ ===== -->
     <section id="surprise">
         <div class="container">
             <h2>🎁 Сюрприз от близких</h2>
@@ -137,22 +137,14 @@
             </div>
 
             <div class="slider-wrapper" id="sliderWrapper">
-                <!-- Волшебный фон -->
                 <div class="slider-magic-bg"></div>
-                
                 <div class="slider-track" id="sliderTrack"></div>
-                
-                <!-- Декоративные линии -->
                 <div class="slider-lines">
                     <span class="line left"></span>
                     <span class="line right"></span>
                     <span class="line center"></span>
                 </div>
-                
-                <!-- Индикаторы -->
                 <div class="slider-dots" id="sliderDots"></div>
-                
-                <!-- Управление -->
                 <div class="slider-controls">
                     <span class="slide-counter" id="slideCounter">1 / 8</span>
                     <div class="slider-nav" id="sliderNav">
@@ -174,7 +166,33 @@
         </div>
     </section>
 
-    <!-- ===== СЕКЦИЯ 6: ФИНАЛ ===== -->
+    <!-- ===== СЕКЦИЯ 6: СКАЧАТЬ ВСЕ ПОЗДРАВЛЕНИЯ ===== -->
+    <section id="download">
+        <div class="container">
+            <h2>💾 Скачать все поздравления</h2>
+            <div class="divider"></div>
+            <p class="section-subtitle">Сохрани все видео и аудио-поздравления к себе на устройство</p>
+            <div class="download-wrapper">
+                <button class="magic-btn download-btn" id="downloadAllBtn">
+                    <span class="btn-text">📥 Скачать все файлы</span>
+                    <span class="btn-glow"></span>
+                    <span class="btn-sparkles">✨</span>
+                </button>
+                <div class="download-info">
+                    <span id="fileCount">0</span> файлов готово к скачиванию
+                </div>
+                <div class="download-progress" id="downloadProgress" style="display: none;">
+                    <div class="progress-bar-download" id="downloadProgressBar" style="width: 0%;"></div>
+                    <span class="progress-text-download" id="downloadProgressText">0%</span>
+                </div>
+                <div class="download-note">
+                    💡 Все файлы будут скачаны по одному на ваше устройство
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== СЕКЦИЯ 7: ФИНАЛ ===== -->
     <section id="finale">
         <div class="container">
             <div class="hearts-container">❤️ 💛 💖 💗 💘 💝 💕 💞</div>
