@@ -31,7 +31,7 @@
         ballsContainer.appendChild(ball);
     }
 
-    // ----- 2. Данные друзей (с аудио и видео) -----
+    // ----- 2. Данные друзей -----
     const friends = [
         { name: 'Мама', message: 'С днём рождения, Дочка! Ты — лучшая!', photo: 'img/friends/mama.jpg', video: 'video/friend1.mp4' },
         { name: 'Никита', message: 'Пусть мечты сбываются! Я тебя люблю!', photo: 'img/nikita.jpg', video: 'video/friend2.mp4', audio: 'audio/Nikita.ogg' },
@@ -59,8 +59,9 @@
     let totalSlides = friends.length;
     let currentVideo = null;
     let currentAudio = null;
+    let autoTransitionEnabled = false;
 
-    // ----- 4. Создание слайдов (с подписью для аудио) -----
+    // ----- 4. Создание слайдов -----
     friends.forEach((f, index) => {
         const slide = document.createElement('div');
         slide.className = 'slide';
@@ -69,7 +70,6 @@
         const card = document.createElement('div');
         card.className = 'friend-card';
 
-        // Фото
         const img = document.createElement('img');
         img.className = 'friend-photo';
         img.src = f.photo || 'img/default-avatar.jpg';
@@ -89,7 +89,6 @@
         });
         card.appendChild(img);
 
-        // Имя
         const name = document.createElement('div');
         name.className = 'friend-name';
         name.textContent = f.name;
@@ -99,13 +98,11 @@
         });
         card.appendChild(name);
 
-        // Подпись
         const sub = document.createElement('div');
         sub.className = 'friend-greeting';
         sub.textContent = `💌 Поздравление от ${f.name}`;
         card.appendChild(sub);
 
-        // Сообщение
         const msg = document.createElement('div');
         msg.className = 'friend-message';
         msg.textContent = f.message;
@@ -115,12 +112,10 @@
         });
         card.appendChild(msg);
 
-        // Медиа-блок
         const mediaBlock = document.createElement('div');
         mediaBlock.className = 'media-block';
         mediaBlock.dataset.index = index;
 
-        // Видео
         if (f.video) {
             const video = document.createElement('video');
             video.src = f.video;
@@ -133,7 +128,6 @@
             mediaBlock.appendChild(video);
         }
 
-        // Аудио с подписью
         if (f.audio) {
             const audio = document.createElement('audio');
             audio.src = f.audio;
@@ -142,7 +136,6 @@
             audio.dataset.index = index;
             audio.className = 'friend-audio';
             
-            // Подпись для аудио
             const audioLabel = document.createElement('div');
             audioLabel.className = 'audio-label';
             audioLabel.textContent = '🎵 Аудио-поздравление';
@@ -154,7 +147,6 @@
         slide.appendChild(card);
         sliderTrack.appendChild(slide);
 
-        // Точка
         const dot = document.createElement('button');
         dot.className = 'dot' + (index === 0 ? ' active' : '');
         dot.dataset.index = index;
@@ -167,7 +159,7 @@
         if (index < 0 || index >= totalSlides) return;
         currentIndex = index;
         const offset = -index * 100;
-        sliderTrack.style.transition = animate ? 'transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
+        sliderTrack.style.transition = animate ? 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)' : 'none';
         sliderTrack.style.transform = `translateX(${offset}%)`;
 
         document.querySelectorAll('.slide').forEach((s, i) => {
@@ -180,13 +172,31 @@
         prevBtn.disabled = (index === 0);
         nextBtn.disabled = (index === totalSlides - 1);
 
+        // Запускаем салют при переключении
+        if (animate) {
+            setTimeout(() => {
+                launchFirework(
+                    Math.random() * window.innerWidth,
+                    Math.random() * window.innerHeight * 0.3 + 50
+                );
+            }, 300);
+        }
+
         resetMediaOnSlide(index);
     }
 
-    // ----- 6. Сброс медиа -----
+    // ----- 6. Сброс медиа (с автопереходом) -----
     function resetMediaOnSlide(index) {
-        if (currentVideo) { currentVideo.pause(); currentVideo.currentTime = 0; }
-        if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
+        if (currentVideo) { 
+            currentVideo.pause(); 
+            currentVideo.currentTime = 0; 
+            currentVideo.onended = null;
+        }
+        if (currentAudio) { 
+            currentAudio.pause(); 
+            currentAudio.currentTime = 0; 
+            currentAudio.onended = null;
+        }
         clearTimeout(mediaTimeout);
 
         const slides = document.querySelectorAll('.slide');
@@ -202,47 +212,50 @@
 
         mediaTimeout = setTimeout(() => {
             if (mediaBlock) mediaBlock.classList.add('visible');
+            
             setTimeout(() => {
                 if (video) {
                     video.muted = false;
+                    
+                    // Функция для перехода после завершения
+                    const onMediaEnd = function() {
+                        if (autoTransitionEnabled && currentIndex < totalSlides - 1) {
+                            goToSlide(currentIndex + 1);
+                        } else if (autoTransitionEnabled && currentIndex === totalSlides - 1) {
+                            finishSurprise();
+                        }
+                    };
+
                     video.play().catch(e => console.warn('Видео не запустилось:', e));
                     video.onended = function() {
                         if (audio) {
                             audio.play().catch(e => console.warn('Аудио не запустилось:', e));
                             audio.onended = function() {
-                                if (currentIndex < totalSlides - 1) {
-                                    goToSlide(currentIndex + 1);
-                                } else {
-                                    finishSurprise();
-                                }
+                                onMediaEnd();
                             };
                         } else {
-                            if (currentIndex < totalSlides - 1) {
-                                goToSlide(currentIndex + 1);
-                            } else {
-                                finishSurprise();
-                            }
+                            onMediaEnd();
                         }
                     };
                 } else if (audio) {
                     audio.play().catch(e => console.warn('Аудио не запустилось:', e));
                     audio.onended = function() {
-                        if (currentIndex < totalSlides - 1) {
+                        if (autoTransitionEnabled && currentIndex < totalSlides - 1) {
                             goToSlide(currentIndex + 1);
-                        } else {
+                        } else if (autoTransitionEnabled && currentIndex === totalSlides - 1) {
                             finishSurprise();
                         }
                     };
                 } else {
                     setTimeout(() => {
-                        if (currentIndex < totalSlides - 1) {
+                        if (autoTransitionEnabled && currentIndex < totalSlides - 1) {
                             goToSlide(currentIndex + 1);
-                        } else {
+                        } else if (autoTransitionEnabled && currentIndex === totalSlides - 1) {
                             finishSurprise();
                         }
-                    }, 2000);
+                    }, 3000);
                 }
-            }, 300);
+            }, 500);
         }, 1200);
     }
 
@@ -253,6 +266,8 @@
         playBtn.style.background = '#8b6b4a';
         playBtn.disabled = true;
         sliderNav.style.display = 'flex';
+        autoTransitionEnabled = false;
+        
         const finalSlide = document.createElement('div');
         finalSlide.className = 'slide';
         finalSlide.innerHTML = `
@@ -267,11 +282,12 @@
         goToSlide(totalSlides);
         document.querySelector('.slider-controls').style.display = 'flex';
         document.querySelector('.slider-dots').style.display = 'flex';
-        for (let i = 0; i < 6; i++) {
+        
+        for (let i = 0; i < 8; i++) {
             setTimeout(() => launchFirework(
                 Math.random() * window.innerWidth,
                 Math.random() * window.innerHeight * 0.5 + 80
-            ), i * 500);
+            ), i * 400);
         }
     }
 
@@ -279,12 +295,16 @@
     playBtn.addEventListener('click', function() {
         if (isPlaying) return;
         isPlaying = true;
+        autoTransitionEnabled = true;
+        
         document.body.style.overflow = 'hidden';
         playBtn.style.display = 'none';
         sliderNav.style.display = 'flex';
+        
         goToSlide(0, false);
         resetMediaOnSlide(0);
-        for (let i = 0; i < 4; i++) {
+        
+        for (let i = 0; i < 5; i++) {
             setTimeout(() => launchFirework(
                 Math.random() * window.innerWidth,
                 Math.random() * window.innerHeight * 0.4 + 80
@@ -292,34 +312,38 @@
         }
     });
 
-    // ----- 9. Кнопки навигации -----
+    // ----- 9. Кнопки навигации (отключают автопереход) -----
+    function handleManualNavigation() {
+        autoTransitionEnabled = false;
+        if (currentVideo) {
+            currentVideo.pause();
+            currentVideo.onended = null;
+        }
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.onended = null;
+        }
+        clearTimeout(mediaTimeout);
+    }
+
     prevBtn.addEventListener('click', function() {
         if (currentIndex > 0) {
-            if (currentVideo) { currentVideo.pause(); currentVideo.currentTime = 0; }
-            if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
-            clearTimeout(mediaTimeout);
+            handleManualNavigation();
             goToSlide(currentIndex - 1);
-            resetMediaOnSlide(currentIndex);
         }
     });
 
     nextBtn.addEventListener('click', function() {
         if (currentIndex < totalSlides - 1) {
-            if (currentVideo) { currentVideo.pause(); currentVideo.currentTime = 0; }
-            if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
-            clearTimeout(mediaTimeout);
+            handleManualNavigation();
             goToSlide(currentIndex + 1);
-            resetMediaOnSlide(currentIndex);
         }
     });
 
     skipBtn.addEventListener('click', function() {
         if (currentIndex < totalSlides - 1) {
-            if (currentVideo) { currentVideo.pause(); currentVideo.currentTime = 0; }
-            if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
-            clearTimeout(mediaTimeout);
+            handleManualNavigation();
             goToSlide(currentIndex + 1);
-            resetMediaOnSlide(currentIndex);
         } else {
             finishSurprise();
         }
