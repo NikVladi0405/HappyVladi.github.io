@@ -31,14 +31,14 @@
         ballsContainer.appendChild(ball);
     }
 
-    // ----- 2. Данные друзей -----
+    // ----- 2. Данные друзей (с вашими изменениями) -----
     const friends = [
         { name: 'Мама', message: 'С днём рождения, Дочка! Ты — лучшая!', photo: 'img/friends/mama.jpg', video: 'video/friend1.mp4' },
         { name: 'Никита', message: 'Пусть мечты сбываются! Я тебя люблю!', photo: 'img/nikita.jpg', video: 'video/friend2.mp4', audio: 'audio/Nikita.ogg' },
         { name: 'Малика', message: 'Пусть будет только счастье! ❤️', photo: 'img/friends/angelina.jpg', video: 'video/friend5.mp4', audio: 'audio/friend5.ogg' },
         { name: 'Амалия', message: 'Ты — невероятная! Обнимаю)', photo: 'img/friends/malika.jpg', video: 'video/friend3.mp4' },
         { name: 'Эрика', message: 'Ты наше чудо!', photo: 'img/friends/erika.jpg', video: 'video/friend7.mp4' },
-        { name: 'Ирина', message: 'Пусть жизнь будет сладкой, как мёд!', photo: 'img/friends/irina.jpg', video: 'video/friend4.mp4' },
+        { name: 'Ирина', message: 'Пусть жизнь будет сладкой, как мёд!', photo: 'img/friends/irina.jpg', video: 'video/friend4.mp4', audio: 'audio/friend0.ogg' },
         { name: 'Кира', message: 'Будь счастлива каждый миг!', photo: 'img/friends/kira.jpg', video: 'video/friend6.mp4', audio: 'audio/friend6.ogg' },
         { name: 'Катя', message: 'Поздравляю от всей души!', photo: 'img/friends/katya.jpg', video: 'video/friend8.mp4' }
     ];
